@@ -1,59 +1,74 @@
-window.MathJax = {
-    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] }
-};
+if (!window.MathJax) {
+    window.MathJax = {
+        tex: {
+            inlineMath: [["\\(", "\\)"]],
+            displayMath: [["\\[", "\\]"]],
+        },
+    };
+}
 
-if (!document.getElementById('mathjax-lib')) {
-    const s = document.createElement('script');
-    s.id = 'mathjax-lib';
-    s.async = true;
-    s.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
-    document.head.appendChild(s);
+if (!document.getElementById("mathjax-lib")) {
+    const script = document.createElement("script");
+    script.id = "mathjax-lib";
+    script.async = true;
+    script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js";
+    document.head.appendChild(script);
 }
 
 class MathShow extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({ mode: "open" }).innerHTML = `
-         <style>
-                :host {
-                    margin: 0;
-                    padding: 0;
-                    width: 100%;
-                    height: 100%;
-                    box-sizing: border-box;
-                    
-                    font-family: "PMingLiU", "標楷體", serif;
-                    font-size: 11pt;
-                    line-height: 1.2;
-                }
-                #main {
-                    width: 100%;
-                    height: 100%;
-                    padding: 10px;
-                    background-color: white;
-                    box-sizing: border-box;
-
-                    
-                }
-        </style>
-        
-        <div spellcheck="false" id="main">
-            <slot></slot>
-        </div>
-        `;
-
-        this._div = this.shadowRoot.querySelector('#main');
+        this._pending = false;
+        this._observing = false;
+        this._observer = new MutationObserver(() => this._scheduleTypeset());
     }
 
     connectedCallback() {
-        this._typesetOne(this._div);
+        this._startObserving();
+        this._scheduleTypeset();
     }
 
-    async _typesetOne(el) {
-        const MJ = window.MathJax;
-        if (!MJ) return;
-        if (MJ.startup?.promise) await MJ.startup.promise;
-        await MJ.typesetPromise([el]);
+    disconnectedCallback() {
+        this._stopObserving();
     }
 
-} customElements.define("Math-Show", MathShow);
+    _startObserving() {
+        if (this._observing) return;
+        this._observer.observe(this, {
+            childList: true,
+            characterData: true,
+            subtree: true,
+        });
+        this._observing = true;
+    }
+
+    _stopObserving() {
+        if (!this._observing) return;
+        this._observer.disconnect();
+        this._observing = false;
+    }
+
+    async _scheduleTypeset() {
+        if (this._pending) return;
+        this._pending = true;
+        this._stopObserving();
+
+        try {
+            const MJ = window.MathJax;
+            if (!MJ) return;
+            if (MJ.startup?.promise) {
+                await MJ.startup.promise;
+            }
+            await MJ.typesetPromise([this]);
+        } catch (error) {
+            console.warn("Math rendering skipped:", error);
+        } finally {
+            this._pending = false;
+            this._startObserving();
+        }
+    }
+}
+
+if (!customElements.get("math-show")) {
+    customElements.define("math-show", MathShow);
+}
