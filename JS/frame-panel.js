@@ -1,215 +1,119 @@
-class FramePanel extends HTMLElement {
-    static observedAttributes = ["title", "subtitle", "variant"];
+(function () {
+    const STYLE_ID = "frame-panel-shared-style";
+    const FRAME_STYLE = `
+        .frame-panel-shell {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: "open" }).innerHTML = `
-            <style>
-                :host {
-                    display: block;
-                    min-height: 0;
-                    overflow: visible;
-                    --accent: #5d8f44;
-                    --accent-soft: rgba(93, 143, 68, 0.15);
-                    --accent-strong: rgba(93, 143, 68, 0.3);
-                }
+        .frame-panel-head {
+            position: relative;
+            z-index: 2;
+            align-self: flex-start;
+            margin: 0 12px -12px 12px;
+            padding: 0 8px;
+            background: linear-gradient(180deg, #f8f5e6, #f1ebda);
+            border: 1px solid rgba(52, 73, 31, 0.35);
+            border-radius: 999px;
+        }
 
-                :host([variant="question"]) {
-                    --accent: #5d8f44;
-                    --accent-soft: rgba(93, 143, 68, 0.15);
-                    --accent-strong: rgba(93, 143, 68, 0.3);
-                }
+        .frame-panel-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            color: var(--text, #1d1d1d);
+            text-transform: uppercase;
+        }
 
-                :host([variant="choice"]) {
-                    --accent: #b07424;
-                    --accent-soft: rgba(176, 116, 36, 0.15);
-                    --accent-strong: rgba(176, 116, 36, 0.3);
-                }
+        .frame-panel-subtitle {
+            display: block;
+            margin-top: 2px;
+            font-size: 10px;
+            line-height: 1.4;
+            color: var(--muted, rgba(29, 29, 29, 0.68));
+        }
 
-                :host([variant="review"]) {
-                    --accent: #347c74;
-                    --accent-soft: rgba(52, 124, 116, 0.15);
-                    --accent-strong: rgba(52, 124, 116, 0.3);
-                }
+        .frame-panel-body {
+            flex: 1 1 auto;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2px solid rgba(52, 73, 31, 0.9);
+            border-radius: 18px;
+            background: linear-gradient(180deg, #fffef9, #f7f4ea);
+            box-shadow: 0 8px 18px rgba(54, 74, 35, 0.08), inset 0 0 0 1px rgba(255,255,255,0.8);
+        }
 
-                .shell {
-                    display: flex;
-                    flex-direction: column;
-                    min-height: 0;
-                    height: 100%;
-                    border: 3px solid var(--line);
-                    border-radius: 18px;
-                    overflow: hidden;
-                    background: var(--panel);
-                    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
-                }
+        .frame-panel-body > * {
+            min-height: 0;
+        }
+    `;
 
-                .head {
-                    position: relative;
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    padding: 10px 12px 10px 14px;
-                    background:
-                        linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.98)),
-                        linear-gradient(90deg, var(--accent-soft), transparent 60%);
-                    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-                }
+    class FramePanel extends HTMLElement {
+        connectedCallback() {
+            if (this.dataset.framePanelReady === "true") return;
+            this.dataset.framePanelReady = "true";
 
-                .head::before {
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    bottom: 0;
-                    width: 6px;
-                    background: linear-gradient(180deg, var(--accent), var(--accent-strong));
-                }
+            const title = this.getAttribute("title") || "";
+            const subtitle = this.getAttribute("subtitle") || "";
 
-                .kicker {
-                    flex: 0 0 auto;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 3px 8px;
-                    border-radius: 999px;
-                    border: 1px solid rgba(0, 0, 0, 0.08);
-                    background: rgba(255, 255, 255, 0.92);
-                    color: var(--accent);
-                    font-size: 10px;
-                    font-weight: 800;
-                    letter-spacing: 0.08em;
-                }
+            let sharedStyle = document.getElementById(STYLE_ID);
+            if (!sharedStyle) {
+                sharedStyle = document.createElement("style");
+                sharedStyle.id = STYLE_ID;
+                sharedStyle.textContent = FRAME_STYLE;
+                document.head.appendChild(sharedStyle);
+            }
 
-                .head-copy {
-                    flex: 1 1 auto;
-                    min-width: 0;
-                    display: flex;
-                    align-items: baseline;
-                    gap: 8px;
-                }
+            const shell = document.createElement("div");
+            shell.className = "frame-panel-shell";
 
-                .title {
-                    margin: 0;
-                    color: var(--text);
-                    font-size: 16px;
-                    line-height: 1.1;
-                    font-weight: 900;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
+            const head = document.createElement("div");
+            head.className = "frame-panel-head";
 
-                .subtitle {
-                    margin: 0;
-                    color: var(--muted);
-                    font-size: 11px;
-                    line-height: 1.2;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    min-width: 0;
-                }
+            const label = document.createElement("div");
+            label.className = "frame-panel-title";
+            label.textContent = title;
+            head.appendChild(label);
 
-                .body {
-                    flex: 1 1 auto;
-                    min-height: 0;
-                    background: var(--panel);
-                }
+            if (subtitle) {
+                const sub = document.createElement("div");
+                sub.className = "frame-panel-subtitle";
+                sub.textContent = subtitle;
+                head.appendChild(sub);
+            }
 
-                slot {
-                    display: block;
-                    min-height: 0;
-                    height: 100%;
-                }
+            const body = document.createElement("div");
+            body.className = "frame-panel-body";
 
-                :host(.shake) {
-                    animation: shake 260ms ease-in-out;
-                }
+            shell.appendChild(head);
+            shell.appendChild(body);
+            this.appendChild(shell);
 
-                @keyframes shake {
-                    0%, 100% { transform: translateX(0); }
-                    20% { transform: translateX(-4px); }
-                    40% { transform: translateX(4px); }
-                    60% { transform: translateX(-3px); }
-                    80% { transform: translateX(3px); }
-                }
+            requestAnimationFrame(() => {
+                const contentNodes = Array.from(this.childNodes).filter((node) => {
+                    if (node === shell) return false;
+                    if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) return false;
+                    return true;
+                });
 
-                @media (max-width: 520px) {
-                    .head {
-                        gap: 8px;
-                        padding: 8px 10px 8px 12px;
-                    }
-
-                    .kicker {
-                        padding: 2px 6px;
-                        font-size: 9px;
-                        letter-spacing: 0.05em;
-                    }
-
-                    .title {
-                        font-size: 15px;
-                    }
-
-                    .subtitle {
-                        font-size: 10px;
-                    }
-                }
-
-                @media (max-width: 390px) {
-                    .subtitle {
-                        display: none;
-                    }
-                }
-            </style>
-            <div class="shell">
-                <div class="head">
-                    <div class="kicker"></div>
-                    <div class="head-copy">
-                        <h2 class="title"></h2>
-                        <p class="subtitle"></p>
-                    </div>
-                </div>
-                <div class="body"><slot></slot></div>
-            </div>
-        `;
-
-        this._kicker = this.shadowRoot.querySelector(".kicker");
-        this._title = this.shadowRoot.querySelector(".title");
-        this._subtitle = this.shadowRoot.querySelector(".subtitle");
-    }
-
-    connectedCallback() {
-        this._sync();
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            this._sync();
+                contentNodes.forEach((node) => {
+                    node.remove();
+                    body.appendChild(node);
+                });
+            });
         }
     }
 
-    _sync() {
-        if (!this._kicker) return;
-
-        const title = this.getAttribute("title") ?? "";
-        const subtitle = this.getAttribute("subtitle") ?? "";
-        const variant = this.getAttribute("variant") ?? "";
-
-        this._title.textContent = title;
-        this._subtitle.textContent = subtitle;
-        this._subtitle.hidden = subtitle.trim().length === 0;
-
-        const labels = {
-            question: "題目區",
-            choice: "作答區",
-            review: "檢討區",
-        };
-
-        this._kicker.textContent = labels[variant] ?? "區塊";
+    if (!customElements.get("frame-panel")) {
+        customElements.define("frame-panel", FramePanel);
     }
-}
-
-if (!customElements.get("frame-panel")) {
-    customElements.define("frame-panel", FramePanel);
-}
+})();

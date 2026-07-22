@@ -9,16 +9,16 @@
     <script src="./JS/frame-panel.js"></script>
     <style>
         :root {
-            --page-bg: #f4f1e8;
-            --panel: #ffffff;
-            --panel-soft: #fcfbf7;
-            --line: #262626;
-            --line-soft: rgba(38, 38, 38, 0.14);
-            --green: #bbdc82;
-            --green-deep: #80b350;
-            --text: #1d1d1d;
-            --muted: rgba(29, 29, 29, 0.68);
-            --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            --page-bg: #f6f3eb;
+            --panel: #fffdf8;
+            --panel-soft: #f9f6ed;
+            --line: #2f3b21;
+            --line-soft: rgba(47, 59, 33, 0.15);
+            --green: #cfe4a1;
+            --green-deep: #7da644;
+            --text: #243022;
+            --muted: rgba(36, 48, 34, 0.68);
+            --shadow: 0 12px 30px rgba(20, 42, 20, 0.08);
             --gap: 12px;
         }
 
@@ -29,16 +29,15 @@
         html,
         body {
             width: 100%;
-            height: 100%;
+            min-height: 100dvh;
+            height: 100dvh;
             margin: 0;
             overflow: hidden;
             color: var(--text);
             font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 30%),
-                repeating-linear-gradient(0deg, transparent 0 23px, rgba(0, 0, 0, 0.03) 23px 24px),
-                repeating-linear-gradient(90deg, transparent 0 23px, rgba(0, 0, 0, 0.03) 23px 24px),
-                var(--page-bg);
+                radial-gradient(circle at top, rgba(205, 230, 143, 0.65), transparent 42%),
+                linear-gradient(180deg, #f7f3e6 0%, #f3f0e5 100%);
         }
 
         body {
@@ -49,7 +48,8 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            height: 100%;
+            min-height: 100dvh;
+            height: 100dvh;
         }
 
         .topbar {
@@ -58,10 +58,10 @@
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            padding: calc(env(safe-area-inset-top) + 10px) 12px 10px;
-            background: linear-gradient(180deg, #c7e49a 0%, #b6d886 100%);
-            border-bottom: 3px solid rgba(0, 0, 0, 0.22);
-            box-shadow: var(--shadow);
+            padding: calc(env(safe-area-inset-top) + 10px) 14px 12px;
+            background: linear-gradient(180deg, #d9efaa 0%, #bedb86 100%);
+            border-bottom: 3px solid rgba(61, 85, 39, 0.25);
+            box-shadow: 0 10px 24px rgba(90, 118, 55, 0.16);
             z-index: 10;
         }
 
@@ -109,39 +109,46 @@
 
         .tab {
             appearance: none;
-            border: 1px solid rgba(0, 0, 0, 0.18);
-            background: rgba(255, 255, 255, 0.54);
+            border: 1px solid rgba(25, 36, 17, 0.16);
+            background: rgba(255, 255, 255, 0.62);
             border-radius: 999px;
             padding: 8px 13px;
-            color: #2b2b2b;
+            color: #2f3f25;
             font-size: 12px;
             font-weight: 800;
         }
 
         .tab.active {
-            background: rgba(255, 255, 255, 0.88);
-            border-color: rgba(0, 0, 0, 0.28);
+            background: rgba(255, 255, 255, 0.94);
+            border-color: rgba(25, 36, 17, 0.26);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .viewport {
             flex: 1 1 auto;
             min-height: 0;
+            height: 100%;
             position: relative;
-            padding: var(--gap);
+            padding: 0;
         }
 
         .pages {
             width: 100%;
+            max-width: 100%;
+            min-width: 100%;
+            flex: 0 0 100%;
             height: 100%;
             display: flex;
-            gap: var(--gap);
+            gap: 0;
             overflow-x: auto;
             overflow-y: hidden;
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
             scrollbar-width: none;
-            touch-action: pan-x pan-y;
+            overscroll-behavior-x: contain;
+            touch-action: pan-y;
+            -webkit-overflow-scrolling: touch;
+            user-select: none;
         }
 
         .pages::-webkit-scrollbar {
@@ -151,24 +158,89 @@
         .page {
             flex: 0 0 100%;
             min-width: 100%;
+            max-width: 100%;
             min-height: 0;
+            height: 100%;
             display: flex;
             flex-direction: column;
             gap: var(--gap);
             scroll-snap-align: start;
+            padding: 8px var(--gap) 10px;
         }
 
         .task-page {
             display: grid;
             grid-template-rows: minmax(0, 32%) minmax(0, 1fr) auto;
+            align-content: stretch;
         }
 
         .review-page {
             min-height: 0;
+            height: 100%;
         }
 
         frame-panel {
             display: flex;
+            min-height: 0;
+            height: 100%;
+        }
+
+        .frame-panel-shell {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .frame-panel-head {
+            position: relative;
+            z-index: 2;
+            align-self: flex-start;
+            margin: 0 12px -12px 12px;
+            padding: 0 8px;
+            background: linear-gradient(180deg, #f8f5e6, #f1ebda);
+            border: 1px solid rgba(52, 73, 31, 0.35);
+            border-radius: 999px;
+        }
+
+        .frame-panel-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            color: var(--text, #1d1d1d);
+            text-transform: uppercase;
+        }
+
+        .frame-panel-subtitle {
+            display: block;
+            margin-top: 2px;
+            font-size: 10px;
+            line-height: 1.4;
+            color: var(--muted, rgba(29, 29, 29, 0.68));
+        }
+
+        .frame-panel-body {
+            flex: 1 1 auto;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2px solid rgba(52, 73, 31, 0.9);
+            border-radius: 18px;
+            background: linear-gradient(180deg, #fffef9, #f7f4ea);
+            box-shadow: 0 8px 18px rgba(54, 74, 35, 0.08), inset 0 0 0 1px rgba(255,255,255,0.8);
+        }
+
+        .frame-panel-body > * {
+            min-height: 0;
+        }
+
+        #reviewPanel {
             min-height: 0;
             height: 100%;
         }
@@ -189,7 +261,7 @@
 
         .panel-pad {
             min-height: 100%;
-            padding: 14px 14px 16px;
+            padding: 14px 14px 20px;
         }
 
         .meta-row {
@@ -223,13 +295,6 @@
             line-height: 1.8;
         }
 
-        .hint {
-            margin: 10px 0 0;
-            font-size: 13px;
-            line-height: 1.6;
-            color: var(--muted);
-        }
-
         .choice-list {
             display: grid;
             gap: 10px;
@@ -240,9 +305,10 @@
             align-items: flex-start;
             gap: 10px;
             padding: 12px;
-            border-radius: 12px;
-            border: 2px solid rgba(0, 0, 0, 0.12);
-            background: #fff;
+            border-radius: 14px;
+            border: 1px solid rgba(47, 59, 33, 0.13);
+            background: linear-gradient(180deg, #fffdf8, #f9f6ee);
+            box-shadow: 0 2px 8px rgba(36, 48, 34, 0.04);
         }
 
         .choice input {
@@ -262,12 +328,6 @@
             line-height: 1.6;
         }
 
-        .choice-note {
-            margin-top: 4px;
-            font-size: 12px;
-            line-height: 1.5;
-            color: var(--muted);
-        }
 
         .action-bar {
             position: sticky;
@@ -278,13 +338,14 @@
         .btn {
             width: 100%;
             appearance: none;
-            border: 2px solid var(--line);
-            border-radius: 12px;
+            border: 2px solid rgba(47, 59, 33, 0.9);
+            border-radius: 14px;
             padding: 12px 14px;
-            background: linear-gradient(180deg, #d9eca5, #bcd880);
-            color: var(--text);
+            background: linear-gradient(180deg, #d9f19f, #b6d56e);
+            color: #243022;
             font-size: 14px;
-            font-weight: 800;
+            font-weight: 900;
+            box-shadow: 0 6px 16px rgba(90, 118, 55, 0.18);
         }
 
         .review-top {
@@ -325,14 +386,15 @@
 
         .analysis {
             display: grid;
-            gap: 10px;
+            gap: 14px;
         }
 
         .analysis-card {
             padding: 12px;
-            border: 2px solid rgba(0, 0, 0, 0.12);
-            border-radius: 12px;
-            background: #fff;
+            border: 1px solid rgba(47, 59, 33, 0.14);
+            border-radius: 14px;
+            background: linear-gradient(180deg, #fffef9, #f8f5ec);
+            box-shadow: 0 2px 8px rgba(36, 48, 34, 0.04);
         }
 
         .analysis-card h3 {
@@ -416,17 +478,6 @@
             color: rgba(0, 0, 0, 0.58);
         }
 
-        .nav-tip {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            padding: 5px 8px;
-            border: 1px solid var(--line-soft);
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.8);
-            color: rgba(0, 0, 0, 0.5);
-            font-size: 11px;
-        }
 
         .mute {
             color: var(--muted);
@@ -517,21 +568,33 @@
         <main class="viewport">
             <div class="pages" id="pages">
                 <section class="page task-page" aria-label="作答頁">
-                    <frame-panel id="questionPanel" class="question-panel" variant="question" title="能力鑑定"
-                        subtitle="閱讀題目，整理條件後再作答">
-                        <div class="panel-scroll">
-                            <div class="panel-pad" id="questionHost"></div>
-                        </div>
-                    </frame-panel>
-
-                    <frame-panel id="optionPanel" class="option-panel" variant="choice" title="多選選項"
-                        subtitle="勾選所有符合條件的敘述">
-                        <div class="panel-scroll">
-                            <div class="panel-pad">
-                                <div class="choice-list" id="choices"></div>
+                    <div id="questionPanel" class="frame-panel question-panel">
+                        <div class="frame-panel-shell">
+                            <div class="frame-panel-head">
+                                <div class="frame-panel-title">能力鑑定</div>
+                            </div>
+                            <div class="frame-panel-body">
+                                <div class="panel-scroll">
+                                    <div class="panel-pad" id="questionHost"></div>
+                                </div>
                             </div>
                         </div>
-                    </frame-panel>
+                    </div>
+
+                    <div id="optionPanel" class="frame-panel option-panel">
+                        <div class="frame-panel-shell">
+                            <div class="frame-panel-head">
+                                <div class="frame-panel-title">多選選項</div>
+                            </div>
+                            <div class="frame-panel-body">
+                                <div class="panel-scroll">
+                                    <div class="panel-pad">
+                                        <div class="choice-list" id="choices"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="action-bar">
                         <button class="btn" id="submitBtn" type="button">送出答案</button>
@@ -539,59 +602,33 @@
                 </section>
 
                 <section class="page review-page" aria-label="檢討頁">
-                    <frame-panel id="reviewPanel" class="review-panel" variant="review" title="批改檢定"
-                        subtitle="檢視分數、判定與下一步建議">
-                        <div class="panel-scroll">
-                            <div class="panel-pad">
-                                <div class="review-top">
-                                    <div>
-                                        <div class="review-title">能力分析</div>
-                                        <div class="review-sub">檢視本題作答結果與能力落點。</div>
-                                    </div>
-                                    <div class="score" id="scoreText">0 / 6 <small>分數</small></div>
-                                </div>
+                    <div id="reviewPanel" class="frame-panel review-panel">
+                        <div class="frame-panel-shell">
+                            <div class="frame-panel-head">
+                                <div class="frame-panel-title">批改檢定</div>
+                            </div>
+                            <div class="frame-panel-body">
+                                <div class="panel-scroll">
+                                    <div class="panel-pad">
+                                        <div class="analysis">
+                                            <div class="analysis-card">
+                                                <h3>作答明細</h3>
+                                                <div class="review-list" id="reviewList"></div>
+                                            </div>
 
-                                <div class="analysis">
-                                    <div class="analysis-card">
-                                        <h3 id="levelText">待評定</h3>
-                                        <p id="summaryText">送出後這裡會顯示本題的評分摘要。</p>
-                                    </div>
-
-                                    <div class="analysis-card">
-                                        <h3>條件轉換</h3>
-                                        <div class="bar"><span id="bar1"></span></div>
-                                        <p class="mute" id="bar1Text">0%</p>
-                                    </div>
-
-                                    <div class="analysis-card">
-                                        <h3>根式變形</h3>
-                                        <div class="bar"><span id="bar2"></span></div>
-                                        <p class="mute" id="bar2Text">0%</p>
-                                    </div>
-
-                                    <div class="analysis-card">
-                                        <h3>檢查習慣</h3>
-                                        <div class="bar"><span id="bar3"></span></div>
-                                        <p class="mute" id="bar3Text">0%</p>
-                                    </div>
-
-                                    <div class="analysis-card">
-                                        <h3>作答明細</h3>
-                                        <div class="review-list" id="reviewList"></div>
-                                    </div>
-
-                                    <div class="analysis-card" style="border-color: rgba(185, 138, 50, 0.24); background: #fffaf0;">
-                                        <h3>下一步建議</h3>
-                                        <p id="adviceText">完成作答後，系統會根據你的選擇提供下一步練習方向。</p>
+                                            <div class="analysis-card">
+                                                <h3>預設批改</h3>
+                                                <p id="feedbackText">完成作答後，這裡會顯示對應的預設批改內容。</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </frame-panel>
+                    </div>
                 </section>
             </div>
 
-            <div class="nav-tip">左右滑動切換頁面</div>
         </main>
     </div>
 
@@ -604,20 +641,7 @@
         const questionHost = document.getElementById("questionHost");
         const choicesHost = document.getElementById("choices");
         const reviewList = document.getElementById("reviewList");
-        const scoreText = document.getElementById("scoreText");
-        const levelText = document.getElementById("levelText");
-        const summaryText = document.getElementById("summaryText");
-        const adviceText = document.getElementById("adviceText");
-        const barEls = [
-            document.getElementById("bar1"),
-            document.getElementById("bar2"),
-            document.getElementById("bar3"),
-        ];
-        const barTexts = [
-            document.getElementById("bar1Text"),
-            document.getElementById("bar2Text"),
-            document.getElementById("bar3Text"),
-        ];
+        const feedbackText = document.getElementById("feedbackText");
 
         let quizData = null;
 
@@ -644,7 +668,6 @@
                     ${data.meta.map((item) => `<span class="chip">${escapeHtml(item)}</span>`).join("")}
                 </div>
                 <div class="problem">${mathBlock(data.title)}</div>
-                <p class="hint">${escapeHtml(data.prompt)}</p>
             `;
         }
 
@@ -654,7 +677,6 @@
                     <input type="checkbox" name="answer" value="${escapeHtml(option.id)}" />
                     <div class="choice-copy">
                         <div class="choice-text">${escapeHtml(option.id)}. ${mathInline(option.text)}</div>
-                        <div class="choice-note">${escapeHtml(option.note)}</div>
                     </div>
                 </label>
             `).join("");
@@ -665,8 +687,7 @@
         }
 
         function pageStep() {
-            const gap = parseFloat(getComputedStyle(pages).gap || "0") || 0;
-            return pages.clientWidth + gap;
+            return pages.clientWidth;
         }
 
         function snapTo(index) {
@@ -674,69 +695,24 @@
             tabs.forEach((tab, i) => tab.classList.toggle("active", i === index));
         }
 
-        function scorePerformance(selected) {
-            const selectedSet = new Set(selected);
-            const correctSet = new Set(quizData.grading.correctAnswers);
-            const maxScore = correctSet.size;
-            let correctCount = 0;
-            let wrongCount = 0;
-
-            selectedSet.forEach((value) => {
-                if (correctSet.has(value)) {
-                    correctCount += 1;
-                } else {
-                    wrongCount += 1;
-                }
-            });
-
-            const missed = Math.max(0, maxScore - correctCount);
-            const raw = Math.max(0, correctCount - wrongCount - missed);
-            return { correctCount, wrongCount, missed, raw, maxScore };
+        function getCombinationKey(selected) {
+            return [...selected].sort().join("");
         }
 
-        function pickTier(raw) {
-            const tiers = [...quizData.grading.tiers].sort((a, b) => b.minScore - a.minScore);
-            return tiers.find((tier) => raw >= tier.minScore) || tiers[tiers.length - 1];
-        }
-
-        function renderBars(result) {
-            const maxScore = result.maxScore || 1;
-            const values = [
-                Math.min(100, Math.max(0, Math.round((result.correctCount / maxScore) * 100))),
-                Math.min(100, Math.max(0, Math.round(((result.correctCount - result.wrongCount) / maxScore) * 100))),
-                Math.min(100, Math.max(0, Math.round(((maxScore - result.missed) / maxScore) * 100))),
-            ];
-
-            values.forEach((value, index) => {
-                barEls[index].style.width = `${value}%`;
-                barTexts[index].textContent = `${value}%`;
-            });
+        function getDefaultFeedback(selected) {
+            const comboKey = getCombinationKey(selected);
+            if (quizData?.grading && typeof quizData.grading === "object" && !("correctAnswers" in quizData.grading) && !("tiers" in quizData.grading) && !("optionFeedback" in quizData.grading)) {
+                return quizData.grading[comboKey] || "此組合尚未提供預設批改內容。";
+            }
+            return "此題目前採用逐項判定與預設回饋內容。";
         }
 
         function renderReview(selected) {
             const selectedSet = new Set(selected);
-            const correctSet = new Set(quizData.grading.correctAnswers);
 
             reviewList.innerHTML = quizData.options.map((option) => {
                 const isSelected = selectedSet.has(option.id);
-                const isCorrect = correctSet.has(option.id);
-                let status = "未作答";
-                let statusClass = "status-neutral";
-                let feedback = "尚未作答";
-
-                if (isSelected && isCorrect) {
-                    status = "正確";
-                    statusClass = "status-ok";
-                    feedback = quizData.grading.optionFeedback[option.id].correct;
-                } else if (isSelected && !isCorrect) {
-                    status = "錯誤";
-                    statusClass = "status-bad";
-                    feedback = quizData.grading.optionFeedback[option.id].incorrect;
-                } else if (!isSelected && isCorrect) {
-                    status = "漏選";
-                    statusClass = "status-miss";
-                    feedback = quizData.grading.optionFeedback[option.id].incorrect;
-                }
+                const isCorrect = Boolean(option.correct);
 
                 return `
                     <div class="review-item">
@@ -745,23 +721,23 @@
                                 <span>${escapeHtml(option.id)}.</span>
                                 <span>${mathInline(option.text)}</span>
                             </div>
-                            <span class="${statusClass}">${status}</span>
                         </header>
-                        <p>${escapeHtml(feedback)}</p>
+                        <p>
+                            <span class="${isCorrect ? "status-ok" : "status-bad"}">${isCorrect ? "正確" : "錯誤"}</span>
+                            &nbsp;|&nbsp;
+                            <span class="${isSelected ? "status-ok" : "status-neutral"}">${isSelected ? "已勾選" : "未勾選"}</span>
+                        </p>
                     </div>
                 `;
             }).join("");
         }
 
         function setInitialState() {
-            const maxScore = quizData?.grading?.correctAnswers?.length || 0;
-            scoreText.innerHTML = `0 / ${maxScore} <small>分數</small>`;
-            levelText.textContent = "待評定";
-            summaryText.textContent = "送出後這裡會顯示本題的評分摘要。";
-            adviceText.textContent = "完成作答後，系統會根據你的選擇提供下一步練習方向。";
-            renderBars({ correctCount: 0, wrongCount: 0, missed: maxScore, maxScore });
+            feedbackText.textContent = "";
             reviewList.innerHTML = "";
         }
+
+        let gestureStart = null;
 
         function bindTabs() {
             tabs.forEach((tab) => {
@@ -774,6 +750,27 @@
                 const index = Math.round(pages.scrollLeft / pageStep());
                 tabs.forEach((tab, i) => tab.classList.toggle("active", i === index));
             });
+
+            pages.addEventListener("touchstart", (event) => {
+                const point = event.changedTouches[0];
+                gestureStart = { x: point.clientX, y: point.clientY };
+            }, { passive: true });
+
+            pages.addEventListener("touchend", (event) => {
+                if (!gestureStart) return;
+
+                const point = event.changedTouches[0];
+                const dx = point.clientX - gestureStart.x;
+                const dy = point.clientY - gestureStart.y;
+                const current = Math.round(pages.scrollLeft / pageStep());
+
+                if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy)) {
+                    const next = dx < 0 ? Math.min(current + 1, tabs.length - 1) : Math.max(current - 1, 0);
+                    snapTo(next);
+                }
+
+                gestureStart = null;
+            }, { passive: true });
         }
 
         submitBtn.addEventListener("click", () => {
@@ -783,22 +780,12 @@
                 optionPanel.classList.remove("shake");
                 void optionPanel.offsetWidth;
                 optionPanel.classList.add("shake");
-                summaryText.textContent = "請先勾選答案再送出，這題需要選出所有正確敘述。";
-                levelText.textContent = "尚未作答";
-                scoreText.innerHTML = `0 / ${quizData.grading.correctAnswers.length} <small>分數</small>`;
-                renderBars({ correctCount: 0, wrongCount: 0, missed: quizData.grading.correctAnswers.length, maxScore: quizData.grading.correctAnswers.length });
+                feedbackText.textContent = "請先勾選答案再送出。";
                 renderReview([]);
                 return;
             }
 
-            const result = scorePerformance(selected);
-            const tier = pickTier(result.raw);
-
-            scoreText.innerHTML = `${result.raw} / ${result.maxScore} <small>分數</small>`;
-            levelText.textContent = tier.level;
-            summaryText.textContent = tier.summary;
-            adviceText.textContent = tier.advice;
-            renderBars(result);
+            feedbackText.textContent = getDefaultFeedback(selected);
             renderReview(selected);
             snapTo(1);
         });
@@ -816,7 +803,7 @@
                 quizData = await loadQuizData();
             } catch (error) {
                 console.error(error);
-                questionHost.innerHTML = `<p class="hint">題庫載入失敗，請確認 <code>data.json</code> 是否存在且格式正確。</p>`;
+                questionHost.innerHTML = `<div class="analysis-card">題庫載入失敗，請確認 data.json 是否存在且格式正確。</div>`;
                 choicesHost.innerHTML = "";
                 reviewList.innerHTML = "";
                 submitBtn.disabled = true;
