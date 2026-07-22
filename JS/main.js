@@ -1,8 +1,7 @@
-window.onload = () => {
+﻿window.onload = () => {
     const pages = document.getElementById("pages");
     const tabs = [...document.querySelectorAll(".tab")];
-    const questionPanel = document.getElementById("questionPanel");
-    const optionPanel = document.getElementById("optionPanel");
+    const optionPanel = document.querySelectorAll("frame-panel")[1];
     const submitBtn = document.getElementById("submitBtn");
     const questionHost = document.getElementById("questionHost");
     const choicesHost = document.getElementById("choices");
@@ -10,6 +9,8 @@ window.onload = () => {
     const feedbackText = document.getElementById("feedbackText");
 
     let quizData = null;
+    let reviewUnlocked = false;
+    let gestureStart = null;
 
     function escapeHtml(value) {
         return String(value)
@@ -57,9 +58,40 @@ window.onload = () => {
         return pages.clientWidth;
     }
 
-    function snapTo(index) {
-        pages.scrollTo({ left: index * pageStep(), behavior: "smooth" });
+    function syncTabState(index) {
         tabs.forEach((tab, i) => tab.classList.toggle("active", i === index));
+    }
+
+    function updateNavigationState() {
+        pages.style.overflowX = reviewUnlocked ? "auto" : "hidden";
+        tabs.forEach((tab) => {
+            const target = Number(tab.dataset.go);
+            tab.disabled = target === 1 && !reviewUnlocked;
+        });
+    }
+
+    function snapTo(index) {
+        if (index === 1 && !reviewUnlocked) {
+            pages.scrollTo({ left: 0, behavior: "smooth" });
+            syncTabState(0);
+            return false;
+        }
+
+        pages.scrollTo({ left: index * pageStep(), behavior: "smooth" });
+        syncTabState(index);
+        return true;
+    }
+
+    function revealReviewPage() {
+        reviewUnlocked = true;
+        updateNavigationState();
+
+        // Defer the scroll so the browser can apply the unlocked state first.
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                snapTo(1);
+            });
+        });
     }
 
     function getCombinationKey(selected) {
@@ -68,10 +100,17 @@ window.onload = () => {
 
     function getDefaultFeedback(selected) {
         const comboKey = getCombinationKey(selected);
-        if (quizData?.grading && typeof quizData.grading === "object" && !("correctAnswers" in quizData.grading) && !("tiers" in quizData.grading) && !("optionFeedback" in quizData.grading)) {
-            return quizData.grading[comboKey] || "此組合尚未提供預設批改內容。";
+        if (
+            quizData?.grading &&
+            typeof quizData.grading === "object" &&
+            !("correctAnswers" in quizData.grading) &&
+            !("tiers" in quizData.grading) &&
+            !("optionFeedback" in quizData.grading)
+        ) {
+            return quizData.grading[comboKey] || "請確認作答後再查看解析";
         }
-        return "此題目前採用逐項判定與預設回饋內容。";
+
+        return "請確認作答後再查看解析";
     }
 
     function renderReview(selected) {
@@ -85,10 +124,11 @@ window.onload = () => {
                     <div class="review-item">
                         <header>
                             <div class="review-name">
+                                <label class="review-check ${isSelected ? "is-selected" : "is-unselected"}" aria-label="${isSelected ? "已勾選" : "未勾選"}">
+                                    <input type="checkbox" ${isSelected ? "checked" : ""} disabled tabindex="-1" />
+                                </label>
                                 <span>(${escapeHtml(option.id)})</span>
                                 <span class="${isCorrect ? "status-ok" : "status-bad"}">${isCorrect ? "正確" : "錯誤"}</span>
-                                &nbsp;|&nbsp;
-                                <span class="${isSelected ? "status-ok" : "status-neutral"}">${isSelected ? "已勾選" : "未勾選"}</span>
                             </div>
                         </header>
                         <p>
@@ -104,8 +144,6 @@ window.onload = () => {
         reviewList.innerHTML = "";
     }
 
-    let gestureStart = null;
-
     function bindTabs() {
         tabs.forEach((tab) => {
             tab.addEventListener("click", () => {
@@ -115,29 +153,43 @@ window.onload = () => {
 
         pages.addEventListener("scroll", () => {
             const index = Math.round(pages.scrollLeft / pageStep());
-            tabs.forEach((tab, i) => tab.classList.toggle("active", i === index));
-        });
-
-        pages.addEventListener("touchstart", (event) => {
-            const point = event.changedTouches[0];
-            gestureStart = { x: point.clientX, y: point.clientY };
-        }, { passive: true });
-
-        pages.addEventListener("touchend", (event) => {
-            if (!gestureStart) return;
-
-            const point = event.changedTouches[0];
-            const dx = point.clientX - gestureStart.x;
-            const dy = point.clientY - gestureStart.y;
-            const current = Math.round(pages.scrollLeft / pageStep());
-
-            if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy)) {
-                const next = dx < 0 ? Math.min(current + 1, tabs.length - 1) : Math.max(current - 1, 0);
-                snapTo(next);
+            if (!reviewUnlocked && index > 0) {
+                pages.scrollLeft = 0;
+                syncTabState(0);
+                return;
             }
 
-            gestureStart = null;
-        }, { passive: true });
+            syncTabState(index);
+        });
+
+        pages.addEventListener(
+            "touchstart",
+            (event) => {
+                const point = event.changedTouches[0];
+                gestureStart = { x: point.clientX, y: point.clientY };
+            },
+            { passive: true },
+        );
+
+        pages.addEventListener(
+            "touchend",
+            (event) => {
+                if (!gestureStart) return;
+
+                const point = event.changedTouches[0];
+                const dx = point.clientX - gestureStart.x;
+                const dy = point.clientY - gestureStart.y;
+                const current = Math.round(pages.scrollLeft / pageStep());
+
+                if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy)) {
+                    const next = dx < 0 ? Math.min(current + 1, tabs.length - 1) : Math.max(current - 1, 0);
+                    snapTo(next);
+                }
+
+                gestureStart = null;
+            },
+            { passive: true },
+        );
     }
 
     submitBtn.addEventListener("click", () => {
@@ -147,14 +199,14 @@ window.onload = () => {
             optionPanel.classList.remove("shake");
             void optionPanel.offsetWidth;
             optionPanel.classList.add("shake");
-            feedbackText.textContent = "請先勾選答案再送出。";
+            feedbackText.textContent = "請先作答後再送出";
             renderReview([]);
             return;
         }
 
         feedbackText.innerHTML = `<math-show>${getDefaultFeedback(selected)}</math-show>`;
         renderReview(selected);
-        snapTo(1);
+        revealReviewPage();
     });
 
     async function loadQuizData() {
@@ -181,6 +233,7 @@ window.onload = () => {
         renderOptions(quizData);
         bindTabs();
         setInitialState();
+        updateNavigationState();
         snapTo(0);
     })();
-}
+};

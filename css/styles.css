@@ -1,14 +1,9 @@
 :root {
-    --page-bg: #f6f3eb;
-    --panel: #fffdf8;
     --panel-soft: #f9f6ed;
-    --line: #2f3b21;
     --line-soft: rgba(47, 59, 33, 0.15);
-    --green: #cfe4a1;
     --green-deep: #7da644;
     --text: #243022;
     --muted: rgba(36, 48, 34, 0.68);
-    --shadow: 0 12px 30px rgba(20, 42, 20, 0.08);
     --gap: 12px;
 }
 
@@ -160,7 +155,8 @@ body {
 
 .task-page {
     display: grid;
-    grid-template-rows: minmax(0, 32%) minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 40%) minmax(0, 1fr) auto;
+    /* grid-template-rows: minmax(0, 45fr) minmax(0, 55fr) auto; */
     align-content: stretch;
 }
 
@@ -189,6 +185,10 @@ body {
     margin: 0;
     font-size: 14px;
     line-height: 1.8;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .choice-list {
@@ -241,26 +241,6 @@ body {
     font-size: 14px;
     font-weight: 900;
     box-shadow: 0 6px 16px rgba(90, 118, 55, 0.18);
-}
-
-.review-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 12px;
-}
-
-.review-title {
-    font-size: 18px;
-    font-weight: 900;
-}
-
-.review-sub {
-    margin-top: 4px;
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.5;
 }
 
 .score {
@@ -365,16 +345,39 @@ body {
     color: #9e4922;
 }
 
-.status-miss {
-    color: #8c6b16;
-}
-
 .status-neutral {
     color: rgba(0, 0, 0, 0.58);
 }
 
-.mute {
-    color: var(--muted);
+.review-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid rgba(47, 59, 33, 0.34);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    vertical-align: middle;
+    flex: 0 0 auto;
+}
+
+.review-check input {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    accent-color: var(--green-deep);
+    pointer-events: none;
+    cursor: default;
+}
+
+.review-check.is-unselected {
+    opacity: 0.72;
+}
+
+.review-check.is-selected {
+    border-color: rgba(63, 122, 46, 0.55);
 }
 
 .shake {
@@ -413,10 +416,6 @@ body {
         font-size: 17px;
     }
 
-    .review-title {
-        font-size: 16px;
-    }
-
     .score {
         font-size: 24px;
     }
@@ -427,11 +426,7 @@ body {
         display: none;
     }
 
-    .task-page {
-        grid-template-rows: minmax(0, 30%) minmax(0, 1fr) auto;
-    }
-
-    .nav-tip {
-        display: none;
+    .problem {
+        font-size: 14px;
     }
 }
