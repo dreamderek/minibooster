@@ -1,3 +1,23 @@
+const MATH_SHOW_STYLE_ID = "math-show-styles";
+
+function ensureMathShowStyles() {
+    if (document.getElementById(MATH_SHOW_STYLE_ID)) return;
+
+    const style = document.createElement("style");
+    style.id = MATH_SHOW_STYLE_ID;
+    style.textContent = `
+math-show {
+    display: block;
+    min-width: 0;
+}
+
+math-show[inline] {
+    display: inline;
+}
+`;
+    document.head.appendChild(style);
+}
+
 if (!window.MathJax) {
     window.MathJax = {
         tex: {
@@ -6,6 +26,8 @@ if (!window.MathJax) {
         },
     };
 }
+
+ensureMathShowStyles();
 
 if (!document.getElementById("mathjax-lib")) {
     const script = document.createElement("script");
