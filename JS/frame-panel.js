@@ -22,11 +22,15 @@ frame-panel,
     z-index: 2;
     align-self: flex-start;
     margin: 0 12px -12px 12px;
-    padding: 0 8px;
+    padding: 0 10px;
     max-width: calc(100% - 24px);
-    background: linear-gradient(180deg, #f8f5e6, #f1ebda);
-    border: 1px solid rgba(52, 73, 31, 0.35);
     border-radius: 999px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 6px 16px rgba(54, 74, 35, 0.08);
+    backdrop-filter: blur(12px) saturate(1.1);
+    -webkit-backdrop-filter: blur(12px) saturate(1.1);
+    isolation: isolate;
 }
 
 .frame-panel-title {
@@ -61,9 +65,7 @@ frame-panel,
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border: 2px solid rgba(52, 73, 31, 0.9);
-    border-radius: 18px;
-    background: linear-gradient(180deg, #fffef9, #f7f4ea);
+    border-radius: 12px;
     box-shadow: 0 8px 18px rgba(54, 74, 35, 0.08), inset 0 0 0 1px rgba(255,255,255,0.8);
 }
 
@@ -94,6 +96,46 @@ frame-panel,
     .panel-pad {
         padding: 12px 12px 14px;
     }
+}
+
+frame-panel[data-theme="question"] {
+    --panel-head-start: rgba(214, 226, 242, 0.96);
+    --panel-head-end: rgba(148, 171, 204, 0.58);
+    --panel-border: rgba(93, 116, 152, 0.84);
+    --panel-body-start: rgba(251, 253, 255, 0.99);
+    --panel-body-end: rgba(231, 238, 249, 0.95);
+    --panel-title: #223b60;
+}
+
+frame-panel[data-theme="options"] {
+    --panel-head-start: rgba(255, 232, 185, 0.95);
+    --panel-head-end: rgba(226, 178, 92, 0.56);
+    --panel-border: rgba(199, 141, 47, 0.84);
+    --panel-body-start: rgba(255, 252, 244, 0.98);
+    --panel-body-end: rgba(252, 240, 212, 0.94);
+    --panel-title: #6b4b13;
+}
+
+frame-panel[data-theme="review"] {
+    --panel-head-start: rgba(197, 227, 255, 0.95);
+    --panel-head-end: rgba(120, 171, 230, 0.56);
+    --panel-border: rgba(95, 137, 196, 0.84);
+    --panel-body-start: rgba(251, 253, 255, 0.98);
+    --panel-body-end: rgba(227, 239, 252, 0.94);
+    --panel-title: #244b73;
+}
+
+.frame-panel-head {
+    background: linear-gradient(180deg, var(--panel-head-start, rgba(248, 245, 230, 0.72)), var(--panel-head-end, rgba(241, 235, 218, 0.38)));
+}
+
+.frame-panel-title {
+    color: var(--panel-title, var(--text, #1d1d1d));
+}
+
+.frame-panel-body {
+    border: 2px solid var(--panel-border, rgba(52, 73, 31, 0.9));
+    background: linear-gradient(180deg, var(--panel-body-start, #fffef9), var(--panel-body-end, #f7f4ea));
 }
 `;
 
