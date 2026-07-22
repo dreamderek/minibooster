@@ -9,10 +9,15 @@ function ensureMathShowStyles() {
 math-show {
     display: block;
     min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 math-show[inline] {
-    display: inline;
+    display: inline-block;
+    vertical-align: baseline;
+    max-width: 100%;
 }
 `;
     document.head.appendChild(style);

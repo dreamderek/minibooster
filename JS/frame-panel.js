@@ -23,6 +23,7 @@ frame-panel,
     align-self: flex-start;
     margin: 0 12px -12px 12px;
     padding: 0 8px;
+    max-width: calc(100% - 24px);
     background: linear-gradient(180deg, #f8f5e6, #f1ebda);
     border: 1px solid rgba(52, 73, 31, 0.35);
     border-radius: 999px;
@@ -37,6 +38,10 @@ frame-panel,
     letter-spacing: 0.06em;
     color: var(--text, #1d1d1d);
     text-transform: uppercase;
+    line-height: 1.3;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .frame-panel-subtitle {
@@ -45,6 +50,9 @@ frame-panel,
     font-size: 10px;
     line-height: 1.4;
     color: var(--muted, rgba(29, 29, 29, 0.68));
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .frame-panel-body {

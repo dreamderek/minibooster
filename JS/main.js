@@ -43,8 +43,9 @@
         choicesHost.innerHTML = data.options.map((option) => `
                 <label class="choice">
                     <input type="checkbox" name="answer" value="${escapeHtml(option.id)}" />
+                    <span class="choice-id">(${escapeHtml(option.id)})</span>
                     <div class="choice-copy">
-                        <div class="choice-text">(${escapeHtml(option.id)})  ${mathInline(option.text)}</div>
+                        <div class="choice-text">${mathInline(option.text)}</div>
                     </div>
                 </label>
             `).join("");
