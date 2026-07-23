@@ -31,12 +31,16 @@
             .replaceAll("'", "&#39;");
     }
 
+    function escapeMathText(text) {
+        return escapeHtml(text).replace(/&lt;br\s*\/?&gt;/gi, "<br>");
+    }
+
     function mathBlock(text) {
-        return `<math-show>${escapeHtml(text)}</math-show>`;
+        return `<math-show>${escapeMathText(text)}</math-show>`;
     }
 
     function mathInline(text) {
-        return `<math-show inline>${escapeHtml(text)}</math-show>`;
+        return `<math-show inline>${escapeMathText(text)}</math-show>`;
     }
 
     function pickRandomQuestion(questions, excludeId = null) {

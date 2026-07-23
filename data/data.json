@@ -2,18 +2,8 @@
   "questions": [
     {
       "id": "q001",
-      "meta": ["Algebra", "Multiple Select", "Proof"],
+      "meta": ["等差數列", "等差級數"],
       "file": "questions/q001.json"
-    },
-    {
-      "id": "q002",
-      "meta": ["Quadratic", "Roots", "Multiple Select"],
-      "file": "questions/q002.json"
-    },
-    {
-      "id": "q003",
-      "meta": ["Function", "Substitution", "Multiple Select"],
-      "file": "questions/q003.json"
     }
   ]
 }
