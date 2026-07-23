@@ -95,31 +95,17 @@ body {
     word-break: break-word;
 }
 
-.tabs {
+.page-indicator {
     display: flex;
     align-items: center;
-    gap: 8px;
     flex: 0 0 auto;
-    flex-wrap: wrap;
-    justify-content: flex-end;
     min-width: 0;
 }
 
-.tab {
-    appearance: none;
-    border: 1px solid rgba(25, 36, 17, 0.16);
-    background: rgba(255, 255, 255, 0.62);
-    border-radius: 999px;
-    padding: 8px 13px;
-    color: #2f3f25;
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.tab.active {
-    background: rgba(255, 255, 255, 0.94);
-    border-color: rgba(25, 36, 17, 0.26);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+.page-indicator img {
+    display: block;
+    height: 34px;
+    width: auto;
 }
 
 .viewport {
@@ -676,11 +662,8 @@ body {
         line-height: 1.3;
     }
 
-    .tab {
-        padding: 7px 11px;
-        font-size: 11px;
-        white-space: normal;
-        line-height: 1.2;
+    .page-indicator img {
+        height: 28px;
     }
 
     .problem {

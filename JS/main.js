@@ -1,6 +1,11 @@
 ﻿window.onload = () => {
     const pages = document.getElementById("pages");
-    const tabs = [...document.querySelectorAll(".tab")];
+    const pageIndicator = document.getElementById("pageIndicator");
+    const PAGE_IMAGES = ["./data/minitask.png", "./data/minireview.png", "./data/miniad.png"];
+    PAGE_IMAGES.forEach((src) => {
+        const preload = new Image();
+        preload.src = src;
+    });
     const optionPanel = document.querySelectorAll("frame-panel")[1];
     const submitBtn = document.getElementById("submitBtn");
     const nextQuestionBtn = document.getElementById("nextQuestionBtn");
@@ -51,7 +56,7 @@
         return {
             ...fallback,
             ...data,
-            meta: Array.isArray(data?.meta) ? data.meta : (fallback.meta || []),
+            meta: Array.isArray(fallback?.meta) ? fallback.meta : [],
         };
     }
 
@@ -120,27 +125,23 @@
         return pages.clientWidth;
     }
 
-    function syncTabState(index) {
-        tabs.forEach((tab, i) => tab.classList.toggle("active", i === index));
+    function syncPageIndicator(index) {
+        pageIndicator.src = PAGE_IMAGES[index] || PAGE_IMAGES[0];
     }
 
     function updateNavigationState() {
         pages.style.overflowX = reviewUnlocked ? "auto" : "hidden";
-        tabs.forEach((tab) => {
-            const target = Number(tab.dataset.go);
-            tab.disabled = target > 0 && !reviewUnlocked;
-        });
     }
 
     function snapTo(index) {
         if (index > 0 && !reviewUnlocked) {
             pages.scrollTo({ left: 0, behavior: "smooth" });
-            syncTabState(0);
+            syncPageIndicator(0);
             return false;
         }
 
         pages.scrollTo({ left: index * pageStep(), behavior: "smooth" });
-        syncTabState(index);
+        syncPageIndicator(index);
         return true;
     }
 
@@ -240,22 +241,16 @@
         snapTo(0);
     }
 
-    function bindTabs() {
-        tabs.forEach((tab) => {
-            tab.addEventListener("click", () => {
-                snapTo(Number(tab.dataset.go));
-            });
-        });
-
+    function bindNavigation() {
         pages.addEventListener("scroll", () => {
             const index = Math.round(pages.scrollLeft / pageStep());
             if (!reviewUnlocked && index > 0) {
                 pages.scrollLeft = 0;
-                syncTabState(0);
+                syncPageIndicator(0);
                 return;
             }
 
-            syncTabState(index);
+            syncPageIndicator(index);
         });
 
         pages.addEventListener(
@@ -317,7 +312,7 @@
             if (Math.abs(dx) > step * 0.2 || Math.abs(velocity) > 0.5) {
                 next = dx < 0 ? startIndex + 1 : startIndex - 1;
             }
-            next = Math.max(0, Math.min(next, tabs.length - 1));
+            next = Math.max(0, Math.min(next, PAGE_IMAGES.length - 1));
 
             pages.style.scrollSnapType = "x mandatory";
             snapTo(next);
@@ -383,6 +378,6 @@
             return;
         }
 
-        bindTabs();
+        bindNavigation();
     })();
 };

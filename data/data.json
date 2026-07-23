@@ -2,19 +2,16 @@
   "questions": [
     {
       "id": "q001",
-      "title": "Given \\(a > 0\\) and \\(a + \\dfrac{1}{a} = 5\\), which statements are correct?",
       "meta": ["Algebra", "Multiple Select", "Proof"],
       "file": "questions/q001.json"
     },
     {
       "id": "q002",
-      "title": "Given \\(x^2 - 4x - 5 = 0\\), which statements are correct?",
       "meta": ["Quadratic", "Roots", "Multiple Select"],
       "file": "questions/q002.json"
     },
     {
       "id": "q003",
-      "title": "Given \\(f(x) = 2x - 3\\), which statements are correct?",
       "meta": ["Function", "Substitution", "Multiple Select"],
       "file": "questions/q003.json"
     }
