@@ -478,7 +478,7 @@ body {
     overflow: hidden;
     display: block;
     -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    touch-action: pan-y;
 }
 
 .review-item:active {

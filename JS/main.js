@@ -14,6 +14,7 @@
     let reviewUnlocked = false;
     let answersLocked = false;
     let gestureStart = null;
+    let gestureAxis = null;
     let expandedReviewId = null;
 
     function escapeHtml(value) {
@@ -260,31 +261,73 @@
         pages.addEventListener(
             "touchstart",
             (event) => {
-                const point = event.changedTouches[0];
-                gestureStart = { x: point.clientX, y: point.clientY };
+                const point = event.touches[0];
+                gestureStart = {
+                    x: point.clientX,
+                    y: point.clientY,
+                    scrollLeft: pages.scrollLeft,
+                    time: Date.now(),
+                };
+                gestureAxis = null;
             },
             { passive: true },
         );
 
         pages.addEventListener(
-            "touchend",
+            "touchmove",
             (event) => {
                 if (!gestureStart) return;
 
-                const point = event.changedTouches[0];
+                const point = event.touches[0];
                 const dx = point.clientX - gestureStart.x;
                 const dy = point.clientY - gestureStart.y;
-                const current = Math.round(pages.scrollLeft / pageStep());
 
-                if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy)) {
-                    const next = dx < 0 ? Math.min(current + 1, tabs.length - 1) : Math.max(current - 1, 0);
-                    snapTo(next);
+                if (gestureAxis === null) {
+                    if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+                    gestureAxis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+                    if (gestureAxis === "x") {
+                        pages.style.scrollSnapType = "none";
+                    }
                 }
 
-                gestureStart = null;
+                if (gestureAxis !== "x") return;
+
+                event.preventDefault();
+                const maxScroll = reviewUnlocked ? pages.scrollWidth - pages.clientWidth : 0;
+                pages.scrollLeft = Math.max(0, Math.min(gestureStart.scrollLeft - dx, maxScroll));
             },
-            { passive: true },
+            { passive: false },
         );
+
+        function endGesture(event) {
+            if (!gestureStart || gestureAxis !== "x") {
+                gestureStart = null;
+                gestureAxis = null;
+                return;
+            }
+
+            const point = event.changedTouches[0];
+            const dx = point.clientX - gestureStart.x;
+            const elapsed = Date.now() - gestureStart.time;
+            const velocity = elapsed > 0 ? dx / elapsed : 0;
+            const step = pageStep();
+            const startIndex = Math.round(gestureStart.scrollLeft / step);
+
+            let next = startIndex;
+            if (Math.abs(dx) > step * 0.2 || Math.abs(velocity) > 0.5) {
+                next = dx < 0 ? startIndex + 1 : startIndex - 1;
+            }
+            next = Math.max(0, Math.min(next, tabs.length - 1));
+
+            pages.style.scrollSnapType = "x mandatory";
+            snapTo(next);
+
+            gestureStart = null;
+            gestureAxis = null;
+        }
+
+        pages.addEventListener("touchend", endGesture, { passive: true });
+        pages.addEventListener("touchcancel", endGesture, { passive: true });
     }
 
     submitBtn.addEventListener("click", () => {
