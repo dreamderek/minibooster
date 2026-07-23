@@ -362,6 +362,16 @@ body {
     cursor: pointer;
     overflow: hidden;
     display: block;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.review-item:active {
+    background: #fff;
+}
+
+.review-item:focus {
+    outline: none;
 }
 
 .review-item:focus-visible {

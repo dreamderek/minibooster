@@ -1,0 +1,43 @@
+{
+  "title": "Given \\(a > 0\\) and \\(a + \\dfrac{1}{a} = 5\\), which statements are correct?",
+  "meta": ["Algebra", "Multiple Select", "Proof"],
+  "options": [
+    {
+      "id": "A",
+      "text": "\\(a\\) satisfies \\(a^2 - 5a + 1 = 0\\)",
+      "note": "Multiply both sides by \\(a\\) to get the quadratic equation.",
+      "correct": true
+    },
+    {
+      "id": "B",
+      "text": "\\(a\\) can be 1",
+      "note": "If \\(a=1\\), then \\(a + \\dfrac{1}{a} = 2\\), which does not match the condition.",
+      "correct": false
+    },
+    {
+      "id": "C",
+      "text": "\\(a\\) can be \\(\\dfrac{5 + \\sqrt{21}}{2}\\)",
+      "note": "Solving the quadratic gives \\(a = \\dfrac{5 \\pm \\sqrt{21}}{2}\\).",
+      "correct": true
+    },
+    {
+      "id": "D",
+      "text": "\\(a = 5\\)",
+      "note": "Substituting \\(a=5\\) does not satisfy the original equation.",
+      "correct": false
+    },
+    {
+      "id": "E",
+      "text": "\\(a\\) must be greater than 2",
+      "note": "The condition does not force \\(a\\) to be greater than 2.",
+      "correct": false
+    }
+  ],
+  "grading": {
+    "A": "Correct. The original equation becomes a quadratic after multiplying by \\(a\\).",
+    "C": "Correct. One of the two quadratic solutions is shown here.",
+    "AC": "Both statements are correct.",
+    "AB": "\\(B\\) is not correct because \\(a=1\\) does not satisfy the condition.",
+    "ACE": "\\(E\\) is not always true."
+  }
+}

@@ -31,6 +31,48 @@
         return `<math-show inline>${escapeHtml(text)}</math-show>`;
     }
 
+    function pickRandomQuestion(questions) {
+        if (!Array.isArray(questions) || questions.length === 0) {
+            throw new Error("questions array is empty");
+        }
+
+        const index = Math.floor(Math.random() * questions.length);
+        return questions[index];
+    }
+
+    function normalizeQuestion(data, fallback = {}) {
+        return {
+            ...fallback,
+            ...data,
+            meta: Array.isArray(data?.meta) ? data.meta : (fallback.meta || []),
+        };
+    }
+
+    async function fetchJson(path) {
+        const response = await fetch(path, { cache: "no-store" });
+        if (!response.ok) {
+            throw new Error(`${path} load failed: HTTP ${response.status}`);
+        }
+
+        return await response.json();
+    }
+
+    async function loadQuizData() {
+        const manifest = await fetchJson("./data/data.json");
+
+        if (Array.isArray(manifest?.questions) && manifest.questions.length > 0) {
+            const picked = pickRandomQuestion(manifest.questions);
+            if (!picked?.file) {
+                throw new Error("picked question is missing file");
+            }
+
+            const questionData = await fetchJson(`./data/${picked.file}`);
+            return normalizeQuestion(questionData, picked);
+        }
+
+        return manifest;
+    }
+
     function renderQuestion(data) {
         questionHost.innerHTML = `
                 <div class="problem">${mathBlock(data.title)}</div>
@@ -240,14 +282,6 @@
         renderReview(selected);
         revealReviewPage();
     });
-
-    async function loadQuizData() {
-        const response = await fetch("./data.json", { cache: "no-store" });
-        if (!response.ok) {
-            throw new Error(`data.json load failed: HTTP ${response.status}`);
-        }
-        return await response.json();
-    }
 
     (async () => {
         try {

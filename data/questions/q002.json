@@ -1,0 +1,43 @@
+{
+  "title": "Given \\(x^2 - 4x - 5 = 0\\), which statements are correct?",
+  "meta": ["Quadratic", "Roots", "Multiple Select"],
+  "options": [
+    {
+      "id": "A",
+      "text": "The roots are \\(5\\) and \\(-1\\)",
+      "note": "Factor the equation as \\((x - 5)(x + 1) = 0\\).",
+      "correct": true
+    },
+    {
+      "id": "B",
+      "text": "The sum of the roots is 4",
+      "note": "By Vieta's formula, the sum is 4.",
+      "correct": true
+    },
+    {
+      "id": "C",
+      "text": "The product of the roots is \\(-5\\)",
+      "note": "By Vieta's formula, the product is \\(-5\\).",
+      "correct": true
+    },
+    {
+      "id": "D",
+      "text": "Both roots are positive",
+      "note": "One root is \\(-1\\), so this is false.",
+      "correct": false
+    },
+    {
+      "id": "E",
+      "text": "There are no real roots",
+      "note": "The discriminant is positive, so there are two real roots.",
+      "correct": false
+    }
+  ],
+  "grading": {
+    "AB": "Correct. The sum and the roots both match the equation.",
+    "AC": "Correct. The roots also multiply to \\(-5\\).",
+    "ABC": "All three true statements are selected.",
+    "AD": "D is false because one root is negative.",
+    "AE": "The equation has real roots, so E is false."
+  }
+}

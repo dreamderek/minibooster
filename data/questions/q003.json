@@ -1,0 +1,43 @@
+{
+  "title": "Given \\(f(x) = 2x - 3\\), which statements are correct?",
+  "meta": ["Function", "Substitution", "Multiple Select"],
+  "options": [
+    {
+      "id": "A",
+      "text": "\\(f(0) = -3\\)",
+      "note": "Substitute \\(x=0\\): \\(f(0)=2(0)-3=-3\\).",
+      "correct": true
+    },
+    {
+      "id": "B",
+      "text": "\\(f(2) = 1\\)",
+      "note": "Substitute \\(x=2\\): \\(f(2)=4-3=1\\).",
+      "correct": true
+    },
+    {
+      "id": "C",
+      "text": "The graph has slope 2",
+      "note": "The coefficient of \\(x\\) is the slope.",
+      "correct": true
+    },
+    {
+      "id": "D",
+      "text": "\\(f(1) = 3\\)",
+      "note": "Substitute \\(x=1\\): \\(f(1)=2-3=-1\\).",
+      "correct": false
+    },
+    {
+      "id": "E",
+      "text": "The y-intercept is 3",
+      "note": "When \\(x=0\\), \\(f(0)=-3\\), so the intercept is \\(-3\\).",
+      "correct": false
+    }
+  ],
+  "grading": {
+    "A": "Correct. Direct substitution gives the value.",
+    "B": "Correct. Direct substitution gives the value.",
+    "C": "Correct. A linear function's slope is the coefficient of \\(x\\).",
+    "AB": "Both substitution statements are correct.",
+    "ABC": "All three correct statements are selected."
+  }
+}
