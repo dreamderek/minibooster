@@ -1,0 +1,50 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="72" y1="57" x2="1127" y2="618" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6ECFF"/>
+      <stop offset="0.45" stop-color="#E9DDFB"/>
+      <stop offset="1" stop-color="#D6CAF2"/>
+    </linearGradient>
+    <linearGradient id="card" x1="177" y1="114" x2="1032" y2="569" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#FCF9FF" stop-opacity="0.78"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="297" y1="127" x2="898" y2="552" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8A64D1"/>
+      <stop offset="1" stop-color="#C8A9FF"/>
+    </linearGradient>
+    <filter id="shadow" x="86" y="83" width="1028" height="508" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="18"/>
+      <feGaussianBlur stdDeviation="24"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.23 0 0 0 0 0.15 0 0 0 0 0.42 0 0 0 0.18 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="675" rx="42" fill="url(#bg)"/>
+  <circle cx="148" cy="146" r="88" fill="#FFFFFF" fill-opacity="0.45"/>
+  <circle cx="1062" cy="148" r="104" fill="#FFFFFF" fill-opacity="0.25"/>
+  <circle cx="1064" cy="540" r="132" fill="#7D57C6" fill-opacity="0.18"/>
+  <g filter="url(#shadow)">
+    <rect x="116" y="94" width="968" height="486" rx="32" fill="url(#card)"/>
+    <rect x="116" y="94" width="968" height="486" rx="32" stroke="#FFFFFF" stroke-opacity="0.68"/>
+  </g>
+  <rect x="168" y="144" width="208" height="208" rx="28" fill="url(#accent)"/>
+  <path d="M214 259C214 228.624 238.624 204 269 204C299.376 204 324 228.624 324 259C324 289.376 299.376 314 269 314C238.624 314 214 289.376 214 259Z" fill="#FFFFFF" fill-opacity="0.92"/>
+  <path d="M269 224L289 262H249L269 224Z" fill="#8A64D1"/>
+  <path d="M269 294L249 256H289L269 294Z" fill="#8A64D1"/>
+  <text x="432" y="215" fill="#3A255A" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="54" font-weight="900">預設廣告圖檔</text>
+  <text x="432" y="276" fill="#5B477E" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="28" font-weight="700">可替換成你的商品、活動或品牌素材</text>
+  <text x="432" y="330" fill="#6B5A87" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="22" font-weight="600">點擊卡片會前往預設連結，方便快速掛上外部頁面</text>
+  <g>
+    <rect x="432" y="389" width="244" height="56" rx="18" fill="#8A64D1"/>
+    <text x="554" y="425" text-anchor="middle" fill="#FFFFFF" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="24" font-weight="800">DEFAULT LINK</text>
+  </g>
+  <path d="M860 180C928 180 982 234 982 302C982 370 928 424 860 424C792 424 738 370 738 302C738 234 792 180 860 180Z" fill="#FFFFFF" fill-opacity="0.62"/>
+  <path d="M860 224L903 302H817L860 224Z" fill="#D3B8FF"/>
+  <path d="M860 380L817 304H903L860 380Z" fill="#A77BEE"/>
+  <rect x="730" y="452" width="242" height="24" rx="12" fill="#DCCCF6"/>
+  <rect x="730" y="490" width="174" height="24" rx="12" fill="#DCCCF6"/>
+</svg>

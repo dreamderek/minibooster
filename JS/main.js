@@ -3,12 +3,14 @@
     const tabs = [...document.querySelectorAll(".tab")];
     const optionPanel = document.querySelectorAll("frame-panel")[1];
     const submitBtn = document.getElementById("submitBtn");
+    const nextQuestionBtn = document.getElementById("nextQuestionBtn");
     const questionHost = document.getElementById("questionHost");
     const choicesHost = document.getElementById("choices");
     const reviewList = document.getElementById("reviewList");
     const feedbackText = document.getElementById("feedbackText");
 
     let quizData = null;
+    let currentQuestionId = null;
     let reviewUnlocked = false;
     let answersLocked = false;
     let gestureStart = null;
@@ -31,13 +33,17 @@
         return `<math-show inline>${escapeHtml(text)}</math-show>`;
     }
 
-    function pickRandomQuestion(questions) {
+    function pickRandomQuestion(questions, excludeId = null) {
         if (!Array.isArray(questions) || questions.length === 0) {
             throw new Error("questions array is empty");
         }
 
-        const index = Math.floor(Math.random() * questions.length);
-        return questions[index];
+        const pool = excludeId
+            ? questions.filter((question) => question?.id !== excludeId)
+            : questions;
+        const source = pool.length > 0 ? pool : questions;
+        const index = Math.floor(Math.random() * source.length);
+        return source[index];
     }
 
     function normalizeQuestion(data, fallback = {}) {
@@ -57,11 +63,11 @@
         return await response.json();
     }
 
-    async function loadQuizData() {
+    async function loadQuizData(excludeId = null) {
         const manifest = await fetchJson("./data/data.json");
 
         if (Array.isArray(manifest?.questions) && manifest.questions.length > 0) {
-            const picked = pickRandomQuestion(manifest.questions);
+            const picked = pickRandomQuestion(manifest.questions, excludeId);
             if (!picked?.file) {
                 throw new Error("picked question is missing file");
             }
@@ -121,12 +127,12 @@
         pages.style.overflowX = reviewUnlocked ? "auto" : "hidden";
         tabs.forEach((tab) => {
             const target = Number(tab.dataset.go);
-            tab.disabled = target === 1 && !reviewUnlocked;
+            tab.disabled = target > 0 && !reviewUnlocked;
         });
     }
 
     function snapTo(index) {
-        if (index === 1 && !reviewUnlocked) {
+        if (index > 0 && !reviewUnlocked) {
             pages.scrollTo({ left: 0, behavior: "smooth" });
             syncTabState(0);
             return false;
@@ -216,6 +222,23 @@
         reviewList.innerHTML = "";
     }
 
+    function resetQuestionState() {
+        reviewUnlocked = false;
+        answersLocked = false;
+        expandedReviewId = null;
+        updateNavigationState();
+        setInitialState();
+    }
+
+    async function loadAndRenderQuestion(excludeId = null) {
+        quizData = await loadQuizData(excludeId);
+        currentQuestionId = quizData?.id || null;
+        resetQuestionState();
+        renderQuestion(quizData);
+        renderOptions(quizData);
+        snapTo(0);
+    }
+
     function bindTabs() {
         tabs.forEach((tab) => {
             tab.addEventListener("click", () => {
@@ -283,23 +306,40 @@
         revealReviewPage();
     });
 
+    nextQuestionBtn?.addEventListener("click", async () => {
+        const originalLabel = nextQuestionBtn.textContent;
+        nextQuestionBtn.disabled = true;
+        nextQuestionBtn.textContent = "載入中...";
+
+        try {
+            await loadAndRenderQuestion(currentQuestionId);
+        } catch (error) {
+            console.error(error);
+            nextQuestionBtn.textContent = "載入失敗";
+            setTimeout(() => {
+                nextQuestionBtn.textContent = originalLabel;
+                nextQuestionBtn.disabled = false;
+            }, 1200);
+            return;
+        }
+
+        nextQuestionBtn.textContent = originalLabel;
+        nextQuestionBtn.disabled = false;
+    });
+
     (async () => {
         try {
-            quizData = await loadQuizData();
+            await loadAndRenderQuestion();
         } catch (error) {
             console.error(error);
             questionHost.innerHTML = `<div class="analysis-card">題庫載入失敗，請確認 data.json 是否存在且格式正確。</div>`;
             choicesHost.innerHTML = "";
             reviewList.innerHTML = "";
             submitBtn.disabled = true;
+            if (nextQuestionBtn) nextQuestionBtn.disabled = true;
             return;
         }
 
-        renderQuestion(quizData);
-        renderOptions(quizData);
         bindTabs();
-        setInitialState();
-        updateNavigationState();
-        snapTo(0);
     })();
 };

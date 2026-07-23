@@ -26,6 +26,7 @@
             <div class="tabs">
                 <button class="tab active" type="button" data-go="0">作答</button>
                 <button class="tab" type="button" data-go="1">檢討</button>
+                <button class="tab" type="button" data-go="2">廣告</button>
             </div>
         </header>
 
@@ -70,6 +71,31 @@
                         </div>
                     </frame-panel>
                 </section>
+
+                <section class="page ad-page" aria-label="廣告區">
+                    <div class="ad-action-row">
+                        <button class="btn btn-next" id="nextQuestionBtn" type="button">再來一題</button>
+                    </div>
+
+                    <frame-panel data-theme="ad">
+                        <div class="panel-scroll">
+                            <div class="panel-pad">
+                                <div class="ad-layout">
+                                    <div class="ad-card">
+                                        <a class="ad-image-link" id="adLink" href="https://example.com" target="_blank" rel="noopener noreferrer" aria-label="前往廣告頁">
+                                            <img class="ad-image" src="./assets/ad-banner.svg" alt="預設廣告圖檔" />
+                                        </a>
+                                        <div class="ad-copy">
+                                            <span class="ad-label">廣告頁</span>
+                                            <strong>預設素材</strong>
+                                            <p>點擊圖片即可前往預設連結，之後可直接替換圖檔與網址。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </frame-panel>
+                </section>
             </div>
         </main>
     </div>
@@ -77,4 +103,3 @@
 </body>
 
 </html>
-

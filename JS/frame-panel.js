@@ -125,6 +125,15 @@ frame-panel[data-theme="review"] {
     --panel-title: #244b73;
 }
 
+frame-panel[data-theme="ad"] {
+    --panel-head-start: rgba(233, 218, 255, 0.95);
+    --panel-head-end: rgba(172, 143, 220, 0.56);
+    --panel-border: rgba(131, 104, 189, 0.84);
+    --panel-body-start: rgba(255, 252, 255, 0.98);
+    --panel-body-end: rgba(240, 232, 250, 0.96);
+    --panel-title: #533882;
+}
+
 .frame-panel-head {
     background: linear-gradient(180deg, var(--panel-head-start, rgba(248, 245, 230, 0.72)), var(--panel-head-end, rgba(241, 235, 218, 0.38)));
 }
@@ -162,10 +171,12 @@ frame-panel[data-theme="review"] {
             const head = document.createElement("div");
             head.className = "frame-panel-head";
 
-            const label = document.createElement("div");
-            label.className = "frame-panel-title";
-            label.textContent = title;
-            head.appendChild(label);
+            if (title) {
+                const label = document.createElement("div");
+                label.className = "frame-panel-title";
+                label.textContent = title;
+                head.appendChild(label);
+            }
 
             if (subtitle) {
                 const sub = document.createElement("div");
@@ -177,7 +188,9 @@ frame-panel[data-theme="review"] {
             const body = document.createElement("div");
             body.className = "frame-panel-body";
 
-            shell.appendChild(head);
+            if (head.childNodes.length > 0) {
+                shell.appendChild(head);
+            }
             shell.appendChild(body);
             this.appendChild(shell);
 
