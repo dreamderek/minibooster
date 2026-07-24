@@ -5,6 +5,10 @@
     --text: #243022;
     --muted: rgba(36, 48, 34, 0.68);
     --gap: 12px;
+
+    --minitext: 16px;
+    --mediumtext: 18px;
+    --normaltext: 20px;
 }
 
 * {
@@ -297,10 +301,8 @@ body {
 
 .problem {
     margin: 0;
-    font-size: 14px;
     line-height: 1.8;
     min-width: 0;
-    white-space: normal;
     overflow-wrap: anywhere;
     word-break: break-word;
 }
@@ -355,7 +357,6 @@ body {
 }
 
 .choice-text {
-    font-size: 14px;
     line-height: 1.6;
     display: flex;
     align-items: center;
@@ -437,7 +438,7 @@ body {
     overflow: hidden;
 }
 
-.bar > span {
+.bar>span {
     display: block;
     width: 0%;
     height: 100%;
@@ -498,7 +499,7 @@ body {
 
 .review-chevron {
     flex: 0 0 auto;
-    font-size: 12px;
+    font-size: 30px;
     line-height: 1;
     color: rgba(36, 48, 34, 0.48);
     transition: transform 180ms ease;
@@ -546,7 +547,6 @@ body {
 
 .review-option p {
     margin: 0;
-    font-size: 12px;
     line-height: 1.6;
     color: var(--text);
     overflow-wrap: anywhere;
@@ -559,7 +559,6 @@ body {
 
 .review-note p {
     margin: 0;
-    font-size: 12px;
     line-height: 1.6;
     color: var(--muted);
     overflow-wrap: anywhere;
@@ -638,12 +637,38 @@ body {
     animation: shake 260ms ease-in-out;
 }
 
+.problem,
+.choice-text,
+.review-head,
+.review-option p,
+.review-note p,
+.feedbackText {
+    font-size: var(--normaltext);
+    white-space: pre-line;
+}
+
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-3px); }
-    40% { transform: translateX(3px); }
-    60% { transform: translateX(-2px); }
-    80% { transform: translateX(2px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-3px);
+    }
+
+    40% {
+        transform: translateX(3px);
+    }
+
+    60% {
+        transform: translateX(-2px);
+    }
+
+    80% {
+        transform: translateX(2px);
+    }
 }
 
 @media (max-width: 520px) {
@@ -666,12 +691,17 @@ body {
         height: 28px;
     }
 
-    .problem {
-        font-size: 17px;
-    }
-
     .score {
         font-size: 24px;
+    }
+
+    .problem,
+    .choice-text,
+    .review-head,
+    .review-option p,
+    .review-note p,
+    .feedbackText {
+        font-size: var(--mediumtext);
     }
 }
 
@@ -680,7 +710,12 @@ body {
         display: none;
     }
 
-    .problem {
-        font-size: 14px;
+    .problem,
+    .choice-text,
+    .review-head,
+    .review-option p,
+    .review-note p,
+    .feedbackText {
+        font-size: var(--minitext);
     }
 }

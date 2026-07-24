@@ -200,15 +200,9 @@
                             </div>
                             <span class="review-chevron" aria-hidden="true">▾</span>
                         </div>
-                        <div class="review-option">
-                            <p>${mathInline(option.text)}</p>
-                        </div>
+                        <div class="review-option"><p>${mathInline(option.text)}</p></div>
                         <div class="review-note ${isExpanded ? "is-open" : ""}" aria-hidden="${isExpanded ? "false" : "true"}">
-                            <div class="review-note-inner">
-                                <p>
-                                    ${mathInline(option.note)}
-                                </p>
-                            </div>
+                            <div class="review-note-inner"><p>${mathInline(option.note)}</p></div>
                         </div>
                     </button>
                 `;

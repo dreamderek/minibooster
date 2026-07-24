@@ -4,7 +4,7 @@
     {
       "id": "A",
       "text": "若 \\(\\displaystyle a_{10}>0\\), 則 \\(\\displaystyle a_{100}>0\\)",
-      "note": "​考慮 \\(a_{10}  >  0\\) 與 \\(a_{100}  <  0\\) 能否同時存在<br><br>​ ​\\(\\left\\{ \\begin{array}{} a_{10}=2+9d  >  0 \\\\ a_{100}=2+99d  <  0  \\end{array}\\right.\\)<br><br>\\(\\Rightarrow \\)\\(\\left\\{ \\begin{array}{} d  >  \\dfrac{-2}{9}\\\\ d  <  \\dfrac{-2}{99}\\end{array}\\right.\\)<br><br>\\(\\Rightarrow \\)\\(\\dfrac{-2}{9}  <  d  <  \\dfrac{-2}{99}\\) 範圍合法, 可找到反例​​",
+      "note": "​考慮 \\(a_{10} > 0\\) 與 \\(a_{100} < 0\\) 能否同時存在\n​ ​\\(\\left\\{ \\begin{array}{} a_{10}=2+9d > 0 \\\\ a_{100}=2+99d < 0 \\end{array}\\right.\\)\n\\(\\Rightarrow \\)\\(\\left\\{ \\begin{array}{} d > \\dfrac{-2}{9}\\\\ d  <  \\dfrac{-2}{99}\\end{array}\\right.\\)<br><br>\\(\\Rightarrow \\)\\(\\dfrac{-2}{9}  <  d  <  \\dfrac{-2}{99}\\) 範圍合法, 可找到反例​​",
       "correct": false
     },
     {
