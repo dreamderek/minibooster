@@ -51,8 +51,9 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: calc(env(safe-area-inset-top) + 10px) 14px 12px;
-    background: linear-gradient(180deg, #d9efaa 0%, #bedb86 100%);
+    padding: calc(env(safe-area-inset-top) + 10px) 14px 2px;
+    background: #3b5b2e; 
+    /* linear-gradient(180deg, #d9efaa 0%, #bedb86 100%); */
     border-bottom: 3px solid rgba(61, 85, 39, 0.25);
     box-shadow: 0 10px 24px rgba(90, 118, 55, 0.16);
     z-index: 10;
@@ -63,24 +64,23 @@ body {
     align-items: center;
     gap: 10px;
     min-width: 0;
-    flex: 1 1 220px;
+    flex: 1 220px;
 }
 
-.brand-mark {
-    width: 34px;
-    height: 34px;
-    border-radius: 7px;
-    background: linear-gradient(135deg, #45642f, #79a843);
-    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+.brand-logo {
+    height: 70px;
+    width: auto;
     flex: 0 0 auto;
+    margin: -20px 0;
 }
 
-.brand-copy {
+/* .brand-copy {
     min-width: 0;
     line-height: 1.1;
 }
 
 .brand-title {
+    color: #fff;
     font-size: 18px;
     font-weight: 900;
     letter-spacing: 0.02em;
@@ -97,7 +97,7 @@ body {
     white-space: normal;
     overflow-wrap: anywhere;
     word-break: break-word;
-}
+} */
 
 .page-indicator {
     display: flex;
@@ -314,7 +314,7 @@ body {
 
 .choice {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
     padding: 12px;
     border-radius: 14px;
@@ -333,7 +333,7 @@ body {
     height: 20px;
     margin: 0;
     accent-color: var(--green-deep);
-    align-self: center;
+    align-self: flex-start;
 }
 
 .choice input:disabled {
@@ -492,7 +492,7 @@ body {
 .review-name {
     min-width: 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: wrap;
     gap: 6px;
 }
