@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>setData</title>
+    <style>
+        textarea {
+            resize: none;
+        }
+
+        .frame {
+            border: 2px #000 solid;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            width: fit-content;
+            height: auto;
+        }
+
+        span {
+            margin: 0 50px 0 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dataEditForm">
+        <div class="frame">
+            <span>
+                <label for="questionfile">檔案名稱</label>
+                <input type="text" id="questionfile">
+            </span>
+            <span>
+                <label for="meta">知識點</label>
+                <input type="text" id="meta" size="50"><br><br>
+            </span>
+
+            <label for="title">題目</label><br>
+            <textarea id="title" cols="100" rows="5"></textarea>
+            <br><br>
+        </div>
+
+        <div id="anser"></div>
+
+        <button onclick="download()">下載JSON</button>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+
+        loadJson();
+
+        for (let k of ["A", "B", "C", "D", "E"])
+            addframe(k);
+
+
+            
+    };
+
+    let data = {};
+
+    async function loadJson() {
+        const response = await fetch("./data/questions/q000.json");
+        data = await response.json();
+    }
+
+    function download() {
+        data.questionfile = document.getElementById("questionfile").value;
+        data.meta = document.getElementById("meta").value.split(",").map(item => item.trim());
+        data.title = setStyle(document.getElementById("title").value);
+
+        data.options = [];
+        for (let k of ["A", "B", "C", "D", "E"]) {
+            data.options.push({
+                id: document.getElementById(k + "Id").value,
+                text: setStyle(document.getElementById(k + "text").value),
+                correct: document.getElementById(k + "correctTrue").checked,
+                note: setStyle(document.getElementById(k + "note").value)
+            });
+        }
+        // data.options = [
+        //     {
+        //         id: document.getElementById("AId").value,
+        //         text: setStyle(document.getElementById("Atext").value),
+        //         correct: document.getElementById("AcorrectTrue").checked,
+        //         note: setStyle(document.getElementById("Anote").value)    
+        //     },
+        //     {
+        //         id: document.getElementById("BId").value,
+        //         text: JSON.stringify(document.getElementById("Btext").value),
+        //         correct: document.getElementById("BcorrectTrue").checked,
+        //         note: JSON.stringify(document.getElementById("Bnote").value)
+        //     },
+        //     {
+        //         id: document.getElementById("CId").value,
+        //         text: JSON.stringify(document.getElementById("Ctext").value),
+        //         correct: document.getElementById("CcorrectTrue").checked,
+        //         note: JSON.stringify(document.getElementById("Cnote").value)
+        //     },
+        //     {
+        //         id: document.getElementById("DId").value,
+        //         text: JSON.stringify(document.getElementById("Dtext").value),
+        //         correct: document.getElementById("DcorrectTrue").checked,
+        //         note: JSON.stringify(document.getElementById("Dnote").value)
+        //     },
+        //     {
+        //         id: document.getElementById("EId").value,
+        //         text: JSON.stringify(document.getElementById("Etext").value),
+        //         correct: document.getElementById("EcorrectTrue").checked,
+        //         note: JSON.stringify(document.getElementById("Enote").value)
+        //     }
+        // ];
+
+        const blob = new Blob(
+            [JSON.stringify(data, null, 4)],
+            { type: "application/json" }
+        );
+
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = (data.questionfile) ? data.questionfile + ".json" : "temp.json";
+        a.click();
+
+        URL.revokeObjectURL(a.href);
+    }
+
+    function setStyle(e) {
+        return e.trim().replaceAll(" ", "").replace(/[,|，]/, ", ").replaceAll("\\n", "\n");
+    }
+
+    function addframe(id) {
+
+        const div = document.createElement("div");
+        div.className = "frame";
+        div.innerHTML =
+            `<label>選項${id}:</label>
+            <input type="hidden" name="${id}Id" id="${id}Id" value="${id}">
+            <input type="radio" name="${id}correct" id="${id}correctTrue" value="true"><label for="${id}correctTrue">對</label>
+            <input type="radio" name="${id}correct" id="${id}correctFalse" value="false" checked><label for="${id}correctFalse">錯</label><br><br>
+            <label>內文</label><br>
+            <textarea id="${id}text" cols="100" rows="5"></textarea><br>
+            <label>詳解</label><br>
+            <textarea id="${id}note" cols="100" rows="5"></textarea>
+            <br><br>`;
+        document.querySelector("#anser").appendChild(div);
+    }
+</script>
+
+</html>

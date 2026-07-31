@@ -1,0 +1,68 @@
+{
+  "title": "",
+  "options": [
+    {
+      "id": "A",
+      "text": "",
+      "note": "",
+      "correct": false
+    },
+    {
+      "id": "B",
+      "text": "",
+      "note": "​",
+      "correct": false
+    },
+    {
+      "id": "C",
+      "text": "",
+      "note": "​",
+      "correct": true
+    },
+    { 
+      "id": "D",
+      "text": "",
+      "note": "",
+      "correct": true
+    },
+    {
+      "id": "E",
+      "text": "​​​",
+      "note": "",
+      "correct": false
+    }
+  ],
+  "grading": {
+    "A": "",
+    "B": "",
+    "C": "",
+    "D": "",
+    "E": "",
+
+    "AB": "",
+    "AC": "",
+    "AD": "",
+    "AE": "",
+    "BC": "",
+    "BD": "",
+    "BE": "",
+    "CD": "",
+    "CE": "",
+    "DE": "",
+
+    "ABC": "",
+    "ABD": "",
+    "ABE": "",
+    "ACD": "",
+    "ACE": "",
+    "ADE": "",
+
+    "ABCD": "",
+    "ABCE": "",
+    "ABDE": "",
+    "ACDE": "",
+    "BCDE": "",
+
+    "ABCDE": ""
+  }
+}

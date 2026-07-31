@@ -1,9 +1,9 @@
 {
   "questions": [
     {
-      "id": "q001",
+      "id": "temp",
       "meta": ["等差數列", "等差級數"],
-      "file": "questions/q001.json"
+      "file": "questions/temp.json"
     }
   ]
 }
