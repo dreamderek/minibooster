@@ -1,5 +1,6 @@
 {
     "title": "aaa\\(2\\)aaaa\nbbbbbb",
+    "meta": [],
     "options": [
         {
             "id": "A",
@@ -60,9 +61,5 @@
         "ACDE": "",
         "BCDE": "",
         "ABCDE": ""
-    },
-    "questionfile": "",
-    "meta": [
-        ""
-    ]
+    }
 }

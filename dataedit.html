@@ -27,6 +27,11 @@
 
 <body>
     <div id="dataEditForm">
+        <span>
+            <label for="file">檔案</label>
+            <input type="text" id="file">
+            <button onclick="loadJson()">讀取JSON</button>
+        </span>
         <div class="frame">
             <span>
                 <label for="questionfile">檔案名稱</label>
@@ -50,20 +55,32 @@
 <script>
     window.onload = function () {
 
-        loadJson();
-
         for (let k of ["A", "B", "C", "D", "E"])
             addframe(k);
 
-
-            
     };
 
     let data = {};
 
     async function loadJson() {
-        const response = await fetch("./data/questions/q000.json");
+        const file = document.getElementById("file").value;
+        const response = await fetch(`./data/questions/${(file) ? file : "q000"}.json`);
         data = await response.json();
+
+
+        document.getElementById("questionfile").value = file;
+        document.getElementById("meta").value = data.meta.join(", ");
+        document.getElementById("title").value = data.title;
+
+        
+        for (let val of data.options) {
+            const id = val.id;
+            document.getElementById(id + "text").value = val.text;
+            // document.getElementById(id + "correct" + (val.correct)?"True":"False").checked = true;
+            document.getElementById(id + "note").value = val.note;
+            document.querySelector(`input[name="${id}correct"][value="${val.correct}"]`).checked = true;
+         
+        }
     }
 
     function download() {
