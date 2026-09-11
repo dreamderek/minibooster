@@ -1,38 +1,14 @@
 const MATH_SHOW_STYLE_ID = "math-show-styles";
 
-function ensureMathShowStyles() {
-    if (document.getElementById(MATH_SHOW_STYLE_ID)) return;
-
-    const style = document.createElement("style");
-    style.id = MATH_SHOW_STYLE_ID;
-    style.textContent = `
-math-show {
-    display: block;
-    min-width: 0;
-    max-width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-math-show[inline] {
-    display: inline-block;
-    vertical-align: baseline;
-    max-width: 100%;
-}
-`;
-    document.head.appendChild(style);
-}
-
 if (!window.MathJax) {
     window.MathJax = {
         tex: {
             inlineMath: [["\\(", "\\)"]],
-            displayMath: [["\\[", "\\]"]],
+            displayMath: [["\\[", "\\]"]]
         },
     };
 }
 
-ensureMathShowStyles();
 
 if (!document.getElementById("mathjax-lib")) {
     const script = document.createElement("script");
@@ -45,6 +21,7 @@ if (!document.getElementById("mathjax-lib")) {
 class MathShow extends HTMLElement {
     constructor() {
         super();
+        this._ensureMathShowStyles();
         this._pending = false;
         this._observing = false;
         this._observer = new MutationObserver(() => this._scheduleTypeset());
@@ -93,6 +70,31 @@ class MathShow extends HTMLElement {
             this._pending = false;
             this._startObserving();
         }
+    }
+    _ensureMathShowStyles() {
+        if (document.getElementById(MATH_SHOW_STYLE_ID)) return;
+
+        const style = document.createElement("style");
+        style.id = MATH_SHOW_STYLE_ID;
+        style.textContent = `
+            math-show {
+                display: block;
+                min-width: 0;
+                max-width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            math-show[inline] {
+                display: inline-block;
+                vertical-align: baseline;
+                max-width: 100%;
+            }
+            mjx-container {
+                padding: 0px 3px;
+            }
+            `;
+        document.head.appendChild(style);
     }
 }
 

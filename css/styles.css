@@ -52,7 +52,7 @@ body {
     justify-content: space-between;
     gap: 12px;
     padding: calc(env(safe-area-inset-top) + 10px) 14px 2px;
-    background: #3b5b2e; 
+    background: #3b5b2e;
     /* linear-gradient(180deg, #d9efaa 0%, #bedb86 100%); */
     border-bottom: 3px solid rgba(61, 85, 39, 0.25);
     box-shadow: 0 10px 24px rgba(90, 118, 55, 0.16);
@@ -255,6 +255,16 @@ body {
     outline-offset: 3px;
 }
 
+.ad-midle {
+    text-align: center;
+}
+.ad-button {
+    width: 80%;
+    /* outline: 2px solid rgba(131, 104, 189, 0.62); */
+    outline-offset: 3px;
+
+}
+
 .ad-copy {
     display: grid;
     gap: 4px;
@@ -282,6 +292,7 @@ body {
     overflow-wrap: anywhere;
     word-break: break-word;
 }
+
 
 .meta-row {
     display: flex;
@@ -631,6 +642,7 @@ body {
 
 #feedbackText math-show {
     max-width: 100%;
+    font-size: 1.5em;
 }
 
 .shake {

@@ -1,7 +1,7 @@
 ﻿window.onload = () => {
     const pages = document.getElementById("pages");
     const pageIndicator = document.getElementById("pageIndicator");
-    const PAGE_IMAGES = ["./data/minitask.png", "./data/minireview.png", "./data/miniad.png"];
+    const PAGE_IMAGES = ["./assets/minitask.png", "./assets/minireview.png", "./assets/miniad.png"];
     PAGE_IMAGES.forEach((src) => {
         const preload = new Image();
         preload.src = src;
@@ -21,6 +21,9 @@
     let gestureStart = null;
     let gestureAxis = null;
     let expandedReviewId = null;
+    let availableQuestionsPromise = null;
+    const QUESTION_NUMBER_MAX = 999;
+    const QUESTION_BATCH_SIZE = 20;
 
     function escapeHtml(value) {
         return String(value)
@@ -60,33 +63,72 @@
         return {
             ...fallback,
             ...data,
-            meta: Array.isArray(fallback?.meta) ? fallback.meta : [],
+            meta: Array.isArray(data?.meta) ? data.meta : [],
         };
     }
 
-    async function fetchJson(path) {
-        const response = await fetch(path, { cache: "no-store" });
-        if (!response.ok) {
-            throw new Error(`${path} load failed: HTTP ${response.status}`);
+    async function loadAvailableQuestions() {
+        if (availableQuestionsPromise) {
+            return availableQuestionsPromise;
         }
 
-        return await response.json();
+        availableQuestionsPromise = (async () => {
+            const questions = [];
+            let networkFailureCount = 0;
+
+            // q000.json 是編輯器的空白範本；q001.json 至 q999.json 可跳號存在。
+            for (let start = 1; start <= QUESTION_NUMBER_MAX; start += QUESTION_BATCH_SIZE) {
+                const end = Math.min(start + QUESTION_BATCH_SIZE - 1, QUESTION_NUMBER_MAX);
+                const batch = Array.from({ length: end - start + 1 }, (_, offset) => start + offset);
+                const loadedQuestions = await Promise.all(batch.map(async (number) => {
+                    const id = `q${String(number).padStart(3, "0")}`;
+                    const path = `./data/questions/${id}.json`;
+                    let response;
+                    try {
+                        response = await fetch(path, { cache: "no-store" });
+                    } catch (error) {
+                        networkFailureCount += 1;
+                        return null;
+                    }
+
+                    if (response.status === 404) {
+                        return null;
+                    }
+                    if (!response.ok) {
+                        throw new Error(`${path} load failed: HTTP ${response.status}`);
+                    }
+
+                    try {
+                        const questionData = await response.json();
+                        return normalizeQuestion(questionData, { id });
+                    } catch (error) {
+                        const contentType = response.headers.get("content-type") || "";
+                        if (contentType.includes("text/html")) {
+                            return null;
+                        }
+                        throw new Error(`${path} is not valid JSON`);
+                    }
+                }));
+
+                questions.push(...loadedQuestions.filter(Boolean));
+            }
+
+            if (questions.length === 0) {
+                if (networkFailureCount > 0) {
+                    throw new Error("無法讀取題目檔；請透過 HTTP 網頁伺服器開啟本頁，不可直接以 file:// 開啟 index.html");
+                }
+                throw new Error("no question files found in data/questions");
+            }
+
+            return questions;
+        })();
+
+        return availableQuestionsPromise;
     }
 
     async function loadQuizData(excludeId = null) {
-        const manifest = await fetchJson("./data/data.json");
-
-        if (Array.isArray(manifest?.questions) && manifest.questions.length > 0) {
-            const picked = pickRandomQuestion(manifest.questions, excludeId);
-            if (!picked?.file) {
-                throw new Error("picked question is missing file");
-            }
-
-            const questionData = await fetchJson(`./data/${picked.file}`);
-            return normalizeQuestion(questionData, picked);
-        }
-
-        return manifest;
+        const questions = await loadAvailableQuestions();
+        return pickRandomQuestion(questions, excludeId);
     }
 
     function renderQuestion(data) {
@@ -368,7 +410,8 @@
             await loadAndRenderQuestion();
         } catch (error) {
             console.error(error);
-            questionHost.innerHTML = `<div class="analysis-card">題庫載入失敗，請確認 data.json 是否存在且格式正確。</div>`;
+            const message = error instanceof Error ? escapeHtml(error.message) : "未知錯誤";
+            questionHost.innerHTML = `<div class="analysis-card">題庫載入失敗：${message}</div>`;
             choicesHost.innerHTML = "";
             reviewList.innerHTML = "";
             submitBtn.disabled = true;

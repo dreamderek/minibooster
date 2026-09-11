@@ -97,38 +97,6 @@
                 note: setStyle(document.getElementById(k + "note").value)
             });
         }
-        // data.options = [
-        //     {
-        //         id: document.getElementById("AId").value,
-        //         text: setStyle(document.getElementById("Atext").value),
-        //         correct: document.getElementById("AcorrectTrue").checked,
-        //         note: setStyle(document.getElementById("Anote").value)    
-        //     },
-        //     {
-        //         id: document.getElementById("BId").value,
-        //         text: JSON.stringify(document.getElementById("Btext").value),
-        //         correct: document.getElementById("BcorrectTrue").checked,
-        //         note: JSON.stringify(document.getElementById("Bnote").value)
-        //     },
-        //     {
-        //         id: document.getElementById("CId").value,
-        //         text: JSON.stringify(document.getElementById("Ctext").value),
-        //         correct: document.getElementById("CcorrectTrue").checked,
-        //         note: JSON.stringify(document.getElementById("Cnote").value)
-        //     },
-        //     {
-        //         id: document.getElementById("DId").value,
-        //         text: JSON.stringify(document.getElementById("Dtext").value),
-        //         correct: document.getElementById("DcorrectTrue").checked,
-        //         note: JSON.stringify(document.getElementById("Dnote").value)
-        //     },
-        //     {
-        //         id: document.getElementById("EId").value,
-        //         text: JSON.stringify(document.getElementById("Etext").value),
-        //         correct: document.getElementById("EcorrectTrue").checked,
-        //         note: JSON.stringify(document.getElementById("Enote").value)
-        //     }
-        // ];
 
         const blob = new Blob(
             [JSON.stringify(data, null, 4)],
@@ -144,7 +112,7 @@
     }
 
     function setStyle(e) {
-        return e.trim().replaceAll(" ", "").replace(/[,|，]/, ", ").replaceAll("\\n", "\n");
+        return e.trim().replaceAll(" ", "").replace(/[,|，]/, ", ").replaceAll("\\n", "\n").replaceAll("displaystyle", "displaystyle ");
     }
 
     function addframe(id) {

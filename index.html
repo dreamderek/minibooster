@@ -9,18 +9,18 @@
     <script src="./JS/frame-panel.js"></script>
     <script src="./JS/main.js"></script>
     <link rel="stylesheet" href="./css/styles.css" />
-           
+
 </head>
 
 <body>
     <div class="app">
         <header class="topbar">
             <div class="brand">
-                <img class="brand-logo" src="./data/logo.png" alt="MetaMath Logo" />
+                <img class="brand-logo" src="./assets/logo.png" alt="MetaMath Logo" />
             </div>
 
             <div class="page-indicator">
-                <img id="pageIndicator" src="./data/minitask.png" alt="" />
+                <img id="pageIndicator" src="./assets/minitask.png" alt="" />
             </div>
         </header>
 
@@ -57,7 +57,7 @@
                                     </div>
 
                                     <div class="analysis-card">
-                                        <h3>評鑑</h3>
+                                        <h3>評價</h3>
                                         <p id="feedbackText"></p>
                                     </div>
                                 </div>
@@ -73,22 +73,17 @@
 
                     <frame-panel data-theme="ad">
                         <div class="panel-scroll">
-                            <div class="panel-pad">
-                                <div class="ad-layout">
-                                    <div class="ad-card">
-                                        <a class="ad-image-link" id="adLink" href="https://example.com" target="_blank" rel="noopener noreferrer" aria-label="前往廣告頁">
-                                            <img class="ad-image" src="./assets/ad-banner.svg" alt="預設廣告圖檔" />
-                                        </a>
-                                        <div class="ad-copy">
-                                            <span class="ad-label">廣告頁</span>
-                                            <strong>預設素材</strong>
-                                            <p>點擊圖片即可前往預設連結，之後可直接替換圖檔與網址。</p>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="ad-card">
+                                <img class="ad-image" src="./assets/廣告圖.png" alt="預設廣告圖檔" />
                             </div>
                         </div>
                     </frame-panel>
+                    <div class="ad-midle">
+                        <a id="adLink" href="https://example.com" target="_blank" rel="noopener noreferrer"
+                            aria-label="前往廣告頁">
+                            <img class="ad-button" src="./assets/廣告圖按鈕.png" alt="預設廣告圖檔" />
+                        </a>
+                    </div>
                 </section>
             </div>
         </main>
