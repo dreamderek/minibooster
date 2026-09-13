@@ -1,9 +1,9 @@
 :root {
-    --panel-soft: #f9f6ed;
-    --line-soft: rgba(47, 59, 33, 0.15);
-    --green-deep: #7da644;
-    --text: #243022;
-    --muted: rgba(36, 48, 34, 0.68);
+    --panel-soft: #fafaf5;
+    --line-soft: #dde0d5;
+    --green-deep: #3b5b2e;
+    --text: #22261b;
+    --muted: #5a6050;
     --gap: 12px;
 
     --minitext: 16px;
@@ -24,12 +24,7 @@ body {
     overflow: hidden;
     color: var(--text);
     font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
-    background:
-        radial-gradient(circle at 14% 12%, rgba(255, 255, 255, 0.8), transparent 22%),
-        radial-gradient(circle at 84% 14%, rgba(205, 230, 143, 0.38), transparent 24%),
-        radial-gradient(circle at 18% 82%, rgba(120, 171, 230, 0.18), transparent 26%),
-        radial-gradient(circle at 82% 78%, rgba(226, 178, 92, 0.16), transparent 28%),
-        linear-gradient(160deg, #f7f3e6 0%, #eef4dd 42%, #edf2fb 100%);
+    background: #f4f4ec;
 }
 
 body {
@@ -51,11 +46,10 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: calc(env(safe-area-inset-top) + 10px) 14px 2px;
-    background: #3b5b2e;
-    /* linear-gradient(180deg, #d9efaa 0%, #bedb86 100%); */
-    border-bottom: 3px solid rgba(61, 85, 39, 0.25);
-    box-shadow: 0 10px 24px rgba(90, 118, 55, 0.16);
+    padding: calc(env(safe-area-inset-top) + 12px) 16px 8px;
+    background: #1e3217;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 10px rgba(30, 50, 23, 0.14);
     z-index: 10;
 }
 
@@ -68,10 +62,10 @@ body {
 }
 
 .brand-logo {
-    height: 70px;
+    height: 58px;
     width: auto;
     flex: 0 0 auto;
-    margin: -20px 0;
+    margin: -12px 0;
 }
 
 /* .brand-copy {
@@ -747,4 +741,214 @@ math-show[inline]:has(mjx-container) {
     .feedbackText {
         font-size: var(--minitext);
     }
+}
+
+/* MetaMath diagnostic visual system */
+.viewport {
+    padding: 8px 0 0;
+}
+
+.page {
+    padding: 8px 14px 14px;
+    gap: 14px;
+}
+
+frame-panel[data-theme] {
+    --panel-head-start: #1e3217;
+    --panel-head-end: #2a4520;
+    --panel-border: #dde0d5;
+    --panel-body-start: #ffffff;
+    --panel-body-end: #fafaf5;
+    --panel-title: #ffffff;
+}
+
+.frame-panel-head {
+    align-items: center;
+    min-height: 30px;
+    margin: 0 14px -15px;
+    padding: 4px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(30, 50, 23, 0.16);
+    backdrop-filter: none;
+}
+
+.frame-panel-title {
+    font-family: "Noto Serif TC", "Source Han Serif TC", "Songti TC", Georgia, serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.frame-panel-body {
+    border-width: 1px;
+    border-radius: 14px;
+    box-shadow: 0 2px 6px rgba(30, 50, 23, 0.05), 0 1px 2px rgba(30, 50, 23, 0.04);
+}
+
+.panel-pad {
+    padding: 22px 16px 18px;
+}
+
+.meta-row {
+    gap: 7px;
+    margin-bottom: 8px;
+}
+
+.chip {
+    padding: 5px 10px;
+    border: 0;
+    background: #edf2e6;
+    color: #3b5b2e;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.choice-list {
+    gap: 8px;
+}
+
+.choice {
+    min-height: 56px;
+    padding: 11px 12px;
+    border: 1px solid #dde0d5;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: none;
+    transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.choice:has(input:checked) {
+    border-color: #4d7440;
+    background: #f6f9f1;
+    box-shadow: inset 3px 0 #4d7440;
+}
+
+.choice input {
+    width: 18px;
+    height: 18px;
+    accent-color: #3b5b2e;
+}
+
+.choice-id {
+    min-width: 2em;
+    color: #3b5b2e;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+.action-bar {
+    padding: 0 2px env(safe-area-inset-bottom);
+}
+
+.btn {
+    min-height: 46px;
+    border: 1px solid #3b5b2e;
+    border-radius: 9px;
+    padding: 11px 14px;
+    background: #3b5b2e;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(30, 50, 23, 0.16);
+    transition: background 160ms ease, transform 160ms ease;
+}
+
+.btn:active {
+    background: #2a4520;
+    transform: translateY(1px);
+}
+
+.btn:focus-visible,
+.choice:has(input:focus-visible),
+.review-item:focus-visible {
+    outline: 3px solid rgba(74, 134, 176, 0.42);
+    outline-offset: 2px;
+}
+
+.ad-action-row .btn-next {
+    border-color: #3b5b2e;
+    background: #3b5b2e;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(30, 50, 23, 0.16);
+}
+
+.ad-card {
+    padding: 10px;
+    border: 1px solid #dde0d5;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: none;
+}
+
+.ad-image {
+    border: 0;
+    border-radius: 8px;
+    background: #f4f4ec;
+}
+
+.ad-button {
+    width: min(80%, 360px);
+}
+
+.analysis-card {
+    padding: 14px;
+    border: 1px solid #dde0d5;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: none;
+}
+
+.analysis-card h3 {
+    font-family: "Noto Serif TC", "Source Han Serif TC", "Songti TC", Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.review-item {
+    border-color: #dde0d5;
+    border-radius: 10px;
+    background: #fff;
+    padding: 11px 12px 2px;
+}
+
+.review-item.is-expanded {
+    border-color: #b9cdb0;
+    background: #f6f9f1;
+}
+
+.review-chevron {
+    color: #4d7440;
+}
+
+.review-note-inner {
+    border-top-color: #d5dfcf;
+}
+
+.status-ok { color: #3b6e30; }
+.status-bad { color: #b4483c; }
+
+.review-check {
+    border-color: #aeb9a8;
+    border-radius: 50%;
+    box-shadow: none;
+}
+
+.review-check.is-selected {
+    border-color: #3b5b2e;
+}
+
+@media (min-width: 720px) {
+    .page {
+        max-width: 840px;
+        margin: 0 auto;
+        padding-inline: 20px;
+    }
+}
+
+@media (max-width: 520px) {
+    .viewport { padding-top: 5px; }
+    .page { padding: 7px 10px 10px; gap: 10px; }
+    .panel-pad { padding: 20px 13px 14px; }
+    .topbar { padding: calc(env(safe-area-inset-top) + 9px) 12px 6px; }
+    .brand-logo { height: 52px; }
 }
