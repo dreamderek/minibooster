@@ -1,0 +1,72 @@
+{
+  "title": "已知 \\(\\displaystyle \\sin30^\\circ=\\frac12\\)、\\(\\displaystyle \\cos30^\\circ=\\frac{\\sqrt3}{2}\\)、\\(\\displaystyle \\sin45^\\circ=\\cos45^\\circ=\\frac{\\sqrt2}{2}\\)。下列敘述中，請選出正確的選項。",
+  "meta": [
+    "和角公式",
+    "倍角公式"
+  ],
+  "options": [
+    {
+      "id": "A",
+      "text": "由和角公式，\\(\\displaystyle \\sin(30^\\circ+45^\\circ)=\\frac{\\sqrt6+\\sqrt2}{4}\\)。",
+      "note": "使用 \\(\\displaystyle \\sin(\\alpha+\\beta)=\\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta\\)，所以 \\(\\displaystyle \\sin75^\\circ=\\frac12\\cdot\\frac{\\sqrt2}{2}+\\frac{\\sqrt3}{2}\\cdot\\frac{\\sqrt2}{2}=\\frac{\\sqrt6+\\sqrt2}{4}\\)。",
+      "correct": true
+    },
+    {
+      "id": "B",
+      "text": "由和角公式，\\(\\displaystyle \\cos(30^\\circ+45^\\circ)=\\frac{\\sqrt6-\\sqrt2}{4}\\)。",
+      "note": "使用 \\(\\displaystyle \\cos(\\alpha+\\beta)=\\cos\\alpha\\cos\\beta-\\sin\\alpha\\sin\\beta\\)，可得 \\(\\displaystyle \\cos75^\\circ=\\frac{\\sqrt3}{2}\\cdot\\frac{\\sqrt2}{2}-\\frac12\\cdot\\frac{\\sqrt2}{2}=\\frac{\\sqrt6-\\sqrt2}{4}\\)。",
+      "correct": true
+    },
+    {
+      "id": "C",
+      "text": "由倍角公式，\\(\\displaystyle \\cos60^\\circ=2\\cos^2 30^\\circ=\\frac32\\)。",
+      "note": "這裡少了倍角公式中的 \\(-1\\)。正確應為 \\(\\displaystyle \\cos2\\theta=2\\cos^2\\theta-1\\)，所以 \\(\\displaystyle \\cos60^\\circ=2\\left(\\frac{\\sqrt3}{2}\\right)^2-1=\\frac12\\)。",
+      "correct": false
+    },
+    {
+      "id": "D",
+      "text": "由倍角公式，\\(\\displaystyle \\cos60^\\circ=\\cos^2 30^\\circ-\\sin^2 30^\\circ=\\frac12\\)。",
+      "note": "這是倍角公式 \\(\\displaystyle \\cos2\\theta=\\cos^2\\theta-\\sin^2\\theta\\) 的直接應用。代入 \\(\\displaystyle \\theta=30^\\circ\\) 得 \\(\\displaystyle \\frac34-\\frac14=\\frac12\\)。",
+      "correct": true
+    },
+    {
+      "id": "E",
+      "text": "由和角公式，\\(\\displaystyle \\sin75^\\circ=\\sin30^\\circ+\\cos45^\\circ\\)。",
+      "note": "和角公式不能直接把兩個三角函數值相加。應該用 \\(\\displaystyle \\sin(\\alpha+\\beta)=\\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta\\) 展開。",
+      "correct": false
+    }
+  ],
+  "grading": {
+    "A": "看來你能夠用正弦和角公式判斷 A。<br>也許餘弦和角與倍角公式還需要再比較；可先檢查 B 的減號與 D 的平方差形式。",
+    "B": "看來你能夠注意到餘弦和角公式中的減號。<br>也許正弦和角與倍角公式尚未一起檢查；可用 A、D 的展開式逐步代入。",
+    "C": "大部分人常常錯在把 \\(\\displaystyle 2\\cos^2\\theta\\) 當成完整的倍角公式。<br>也許你少注意到 \\(\\displaystyle -1\\)；可以先寫成 \\(\\displaystyle \\cos2\\theta=2\\cos^2\\theta-1\\)，再檢查 A、B、D。",
+    "D": "看來你能夠用 \\(\\displaystyle \\cos^2\\theta-\\sin^2\\theta\\) 的形式檢查倍角。<br>也許兩個和角公式還需要再代入一次；可特別比較 A 的加法與 B 的減號。",
+    "E": "大部分人常常錯在把角度相加後的三角值直接相加。<br>也許你把和角公式簡化成 \\(\\displaystyle \\sin\\alpha+\\cos\\beta\\)；可以先用 A 的兩個乘積展開式檢查。",
+    "AB": "看來你能夠分別使用正弦與餘弦的和角公式。<br>也許倍角公式尚未納入判斷；可用 \\(\\displaystyle \\cos^2\\theta-\\sin^2\\theta\\) 檢查 D。",
+    "AC": "看來你能夠用正弦和角公式判斷 A。<br>大部分人常常在 C 漏掉 \\(\\displaystyle -1\\)；可將 C 與 D 的倍角公式並排比較，再補查 B。",
+    "AD": "看來你能夠分別用和角與倍角公式檢查 A、D。<br>也許 B 的餘弦和角減號尚未確認；可以把 \\(\\displaystyle \\cos(\\alpha+\\beta)\\) 展開後代入。",
+    "AE": "看來你能夠用正弦和角公式判斷 A。<br>大部分人常常把 E 寫成直接相加；可以先比較 A 的兩個乘積，並補查 B、D。",
+    "BC": "看來你能夠注意到 B 的餘弦和角減號。<br>也許 C 少掉 \\(\\displaystyle -1\\) 的部分沒有被察覺；可用 D 的平方差形式比較，並補查 A。",
+    "BD": "看來你能夠分別使用餘弦和角與倍角公式。<br>也許 A 的正弦和角展開尚未確認；可把兩個乘積相加後再檢查。",
+    "BE": "看來你能夠注意到 B 的餘弦和角減號。<br>也許 E 被當成簡化的和角公式；可回到 \\(\\displaystyle \\sin(\\alpha+\\beta)\\) 的兩個乘積形式，並補查 A、D。",
+    "CD": "看來你能夠用 D 的平方差形式檢查倍角。<br>大部分人常常在 C 漏掉 \\(\\displaystyle -1\\)；可將兩式並排代入 \\(\\displaystyle 30^\\circ\\)，並補查 A、B。",
+    "CE": "大部分人常常在 C 漏掉 \\(\\displaystyle -1\\)，又在 E 把和角當成直接相加。<br>也許兩種公式的結構混在一起；可以先分別照 A 的和角展開與 D 的倍角展開檢查。",
+    "DE": "看來你能夠用倍角公式判斷 D。<br>也許 E 的直接相加看起來像簡便寫法；可用 A 的兩個乘積檢查，並補查 B。",
+    "ABC": "看來你能夠分別使用 A、B 的和角公式。<br>大部分人常常在 C 漏掉 \\(\\displaystyle -1\\)；可用 D 的平方差形式比較，避免把倍角公式混用。",
+    "ABD": "看來你能夠用和角與倍角公式判斷 A、B、D。<br>也許 E 的直接相加沒有被納入檢查；看到 \\(\\displaystyle \\sin(\\alpha+\\beta)\\) 時，可先確認是否有兩個乘積。",
+    "ABE": "看來你能夠分別使用 A、B 的和角公式。<br>也許 E 被視為簡化寫法；可用 \\(\\displaystyle \\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta\\) 檢查，並補查 D。",
+    "ACD": "看來你能夠用和角與倍角公式判斷 A、D。<br>大部分人常常在 C 漏掉 \\(\\displaystyle -1\\)；可將 C 改寫為完整倍角公式，再補查 B。",
+    "ACE": "看來你能夠用正弦和角公式判斷 A。<br>也許 C 的 \\(\\displaystyle -1\\) 與 E 的兩個乘積都沒有被分開檢查；可分別對照 D 與 A 的寫法。",
+    "ADE": "看來你能夠用和角與倍角公式判斷 A、D。<br>也許 E 被當成和角公式的簡寫；可確認展開後是否同時出現兩個乘積，並補查 B。",
+    "BCD": "看來你能夠用餘弦和角與倍角公式判斷 B、D。<br>大部分人常常在 C 漏掉 \\(\\displaystyle -1\\)；可把 C、D 同時代入 \\(\\displaystyle 30^\\circ\\)，並補查 A。",
+    "BCE": "看來你能夠注意到 B 的餘弦和角減號。<br>也許 C 的 \\(\\displaystyle -1\\) 與 E 的乘積結構都需要再確認；可分別對照 D 與 A，再檢查這兩個選項。",
+    "BDE": "看來你能夠用餘弦和角與倍角公式判斷 B、D。<br>也許 E 被看成直接代值的簡寫；可先寫出 \\(\\displaystyle \\sin30^\\circ\\cos45^\\circ+\\cos30^\\circ\\sin45^\\circ\\)，再補查 A。",
+    "CDE": "看來你能夠用倍角公式判斷 D。<br>大部分人常常在 C 漏掉 \\(\\displaystyle -1\\)，並在 E 忽略兩個乘積；可分別對照 D 與 A，再補查 B。",
+    "ABCD": "看來你能夠用和角與倍角公式判斷 A、B、D。<br>也許 C 少掉 \\(\\displaystyle -1\\) 的部分沒有被察覺；可將它與 D 的公式逐項比較。",
+    "ABCE": "看來你能夠分別使用 A、B 的和角公式。<br>也許 C 的 \\(\\displaystyle -1\\) 與 E 的乘積結構混在一起；可對照 D 的倍角式與 A 的和角式。",
+    "ABDE": "看來你能夠用和角與倍角公式判斷 A、B、D。<br>也許 E 被當成可直接相加的形式；可以先把 \\(\\displaystyle \\sin(\\alpha+\\beta)\\) 展開成兩個乘積。",
+    "ACDE": "看來你能夠用和角與倍角公式判斷 A、D。<br>大部分人常常在 C 漏掉 \\(\\displaystyle -1\\)，也可能把 E 的和角公式過度簡化；可分別對照 D 與 A。",
+    "BCDE": "看來你能夠用餘弦和角與倍角公式判斷 B、D。<br>也許 C 的 \\(\\displaystyle -1\\) 與 E 的兩個乘積尚未確認；可將 C、E 分別對照 D、A。",
+    "ABCDE": "看來你能夠辨認 A、B、D 所使用的和角與倍角形式。<br>大部分人常常在 C 漏掉 \\(\\displaystyle -1\\)，並在 E 直接相加；可分別用 D 與 A 的完整展開式檢查。"
+  }
+}

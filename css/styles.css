@@ -325,7 +325,7 @@ body {
 
 .choice {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
     padding: 12px;
     border-radius: 14px;
@@ -344,7 +344,7 @@ body {
     height: 20px;
     margin: 0;
     accent-color: var(--green-deep);
-    align-self: flex-start;
+    align-self: center;
 }
 
 .choice input:disabled {
@@ -643,6 +643,23 @@ body {
 #feedbackText math-show {
     max-width: 100%;
     font-size: 1.5em;
+}
+
+/* MathJax 公式含分數、根號或上下標時，替該段文字保留足夠的上下空間。 */
+.problem:has(mjx-container),
+.choice-text:has(mjx-container),
+.review-option p:has(mjx-container),
+.review-note p:has(mjx-container) {
+    line-height: 2.3;
+}
+
+/* 回饋區公式會放大為 1.5em，因此需要額外的行距。 */
+#feedbackText:has(mjx-container) {
+    line-height: 2.7;
+}
+
+math-show[inline]:has(mjx-container) {
+    margin-block: 0.12em;
 }
 
 .shake {
