@@ -1,5 +1,5 @@
 {
-  "title": "已知 \\(\\displaystyle \\sin30^\\circ=\\frac12\\)、\\(\\displaystyle \\cos30^\\circ=\\frac{\\sqrt3}{2}\\)、\\(\\displaystyle \\sin45^\\circ=\\cos45^\\circ=\\frac{\\sqrt2}{2}\\)。下列敘述中，請選出正確的選項。",
+  "title": "已知 \\(\\displaystyle \\sin30^\\circ=\\frac12\\)、\\(\\displaystyle \\cos30^\\circ=\\frac{\\sqrt3}{2}\\)、\\(\\displaystyle \\sin45^\\circ\\)\\(=\\cos45^\\circ\\)\\(=\\frac{\\sqrt2}{2}\\)。下列敘述中，請選出正確的選項。",
   "meta": [
     "和角公式",
     "倍角公式"
@@ -8,19 +8,19 @@
     {
       "id": "A",
       "text": "由和角公式，\\(\\displaystyle \\sin(30^\\circ+45^\\circ)=\\frac{\\sqrt6+\\sqrt2}{4}\\)。",
-      "note": "使用 \\(\\displaystyle \\sin(\\alpha+\\beta)=\\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta\\)，所以 \\(\\displaystyle \\sin75^\\circ=\\frac12\\cdot\\frac{\\sqrt2}{2}+\\frac{\\sqrt3}{2}\\cdot\\frac{\\sqrt2}{2}=\\frac{\\sqrt6+\\sqrt2}{4}\\)。",
+      "note": "使用 \\(\\displaystyle \\sin(\\alpha+\\beta)=\\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta\\)，所以 \\(\\displaystyle \\sin75^\\circ\\)\\(=\\frac12\\cdot\\frac{\\sqrt2}{2}+\\frac{\\sqrt3}{2}\\cdot\\frac{\\sqrt2}{2}\\)\\(=\\frac{\\sqrt6+\\sqrt2}{4}\\)。",
       "correct": true
     },
     {
       "id": "B",
       "text": "由和角公式，\\(\\displaystyle \\cos(30^\\circ+45^\\circ)=\\frac{\\sqrt6-\\sqrt2}{4}\\)。",
-      "note": "使用 \\(\\displaystyle \\cos(\\alpha+\\beta)=\\cos\\alpha\\cos\\beta-\\sin\\alpha\\sin\\beta\\)，可得 \\(\\displaystyle \\cos75^\\circ=\\frac{\\sqrt3}{2}\\cdot\\frac{\\sqrt2}{2}-\\frac12\\cdot\\frac{\\sqrt2}{2}=\\frac{\\sqrt6-\\sqrt2}{4}\\)。",
+      "note": "使用 \\(\\displaystyle \\cos(\\alpha+\\beta)=\\cos\\alpha\\cos\\beta-\\sin\\alpha\\sin\\beta\\)，可得 \\(\\displaystyle \\cos75^\\circ\\)\\(=\\frac{\\sqrt3}{2}\\cdot\\frac{\\sqrt2}{2}-\\frac12\\cdot\\frac{\\sqrt2}{2}\\)\\(=\\frac{\\sqrt6-\\sqrt2}{4}\\)。",
       "correct": true
     },
     {
       "id": "C",
-      "text": "由倍角公式，\\(\\displaystyle \\cos60^\\circ=2\\cos^2 30^\\circ=\\frac32\\)。",
-      "note": "這裡少了倍角公式中的 \\(-1\\)。正確應為 \\(\\displaystyle \\cos2\\theta=2\\cos^2\\theta-1\\)，所以 \\(\\displaystyle \\cos60^\\circ=2\\left(\\frac{\\sqrt3}{2}\\right)^2-1=\\frac12\\)。",
+      "text": "由倍角公式，\\(\\displaystyle \\cos60^\\circ\\)\\(=2\\cos^2 30^\\circ\\)\\(=\\frac32\\)。",
+      "note": "這裡少了倍角公式中的 \\(-1\\)。正確應為 \\(\\displaystyle \\cos2\\theta=2\\cos^2\\theta-1\\)，所以 \\(\\displaystyle \\cos60^\\circ\\)\\(=2\\left(\\frac{\\sqrt3}{2}\\right)^2-1\\)\\(=\\frac12\\)。",
       "correct": false
     },
     {

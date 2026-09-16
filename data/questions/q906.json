@@ -7,7 +7,7 @@
     {
       "id": "A",
       "text": "\\(\\displaystyle (x+3)^2=x^2+6x+9\\)",
-      "note": "\\((x+3)^2=x^2+2\\times x\\times3+3^2=x^2+6x+9\\)。",
+      "note": "\\((x+3)^2\\)\\(=x^2+2\\times x\\times3+3^2\\)\\(=x^2+6x+9\\)。",
       "correct": true
     },
     {
@@ -19,7 +19,7 @@
     {
       "id": "C",
       "text": "\\(\\displaystyle (x-5)^2=x^2-10x+25\\)",
-      "note": "\\((x-5)^2=x^2-2\\times x\\times5+5^2=x^2-10x+25\\)。",
+      "note": "\\((x-5)^2\\)\\(=x^2-2\\times x\\times5+5^2\\)\\(=x^2-10x+25\\)。",
       "correct": true
     },
     {

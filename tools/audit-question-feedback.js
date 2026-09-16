@@ -19,6 +19,26 @@ const expectedGradingKeys = Array.from({ length: 31 }, (_, maskIndex) => {
 
 let hasError = false;
 
+function findUnsplitInlineChains(value, pathName = "root") {
+    if (typeof value === "string") {
+        const chains = [];
+        for (const match of value.matchAll(/\\\\\(([\s\S]*?)\\\\\)/g)) {
+            const math = match[1];
+            if (!/\\begin|\\\\/.test(math) && (math.match(/=/g) || []).length > 1) {
+                chains.push(pathName);
+            }
+        }
+        return chains;
+    }
+    if (Array.isArray(value)) {
+        return value.flatMap((entry, index) => findUnsplitInlineChains(entry, `${pathName}[${index}]`));
+    }
+    if (value && typeof value === "object") {
+        return Object.entries(value).flatMap(([key, entry]) => findUnsplitInlineChains(entry, `${pathName}.${key}`));
+    }
+    return [];
+}
+
 for (const filename of fs.readdirSync(questionDirectory).filter((name) => /^q\d{3}\.json$/.test(name)).sort()) {
     const filePath = path.join(questionDirectory, filename);
     let question;
@@ -31,6 +51,8 @@ for (const filename of fs.readdirSync(questionDirectory).filter((name) => /^q\d{
     }
 
     const errors = [];
+    const unsplitChains = findUnsplitInlineChains(question);
+    if (unsplitChains.length) errors.push(`contains unsplit inline LaTex equality chains at: ${unsplitChains.join(", ")}`);
     if (!Array.isArray(question.options) || question.options.length !== 5) {
         errors.push("must contain exactly five options");
     } else {

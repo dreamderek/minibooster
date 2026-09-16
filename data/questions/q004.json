@@ -8,13 +8,13 @@
     {
       "id": "A",
       "text": "\\(\\displaystyle \\cos\\angle BAD=-\\frac{\\sqrt5}{5}\\)",
-      "note": "由內積公式，\\(\\displaystyle \\vec{AB}\\cdot\\vec{AD}=3(1)+(-4)(2)=-5\\)，且 \\(\\displaystyle |\\vec{AB}|=5\\)、\\(\\displaystyle |\\vec{AD}|=\\sqrt5\\)，所以 \\(\\displaystyle \\cos\\angle BAD=-\\frac{5}{5\\sqrt5}=-\\frac{\\sqrt5}{5}\\)。",
+      "note": "由內積公式，\\(\\displaystyle \\vec{AB}\\cdot\\vec{AD}\\)\\(=3(1)+(-4)(2)\\)\\(=-5\\)，且 \\(\\displaystyle |\\vec{AB}|=5\\)、\\(\\displaystyle |\\vec{AD}|=\\sqrt5\\)，所以 \\(\\displaystyle \\cos\\angle BAD\\)\\(=-\\frac{5}{5\\sqrt5}\\)\\(=-\\frac{\\sqrt5}{5}\\)。",
       "correct": true
     },
     {
       "id": "B",
       "text": "三角形 \\(\\displaystyle ABD\\) 面積為 5。",
-      "note": "三角形面積為 \\(\\displaystyle \\frac12|\\vec{AB}\\times\\vec{AD}|=\\frac12|3(2)-(-4)(1)|=5\\)，所以此敘述正確。",
+      "note": "三角形面積為 \\(\\displaystyle \\frac12|\\vec{AB}\\times\\vec{AD}|\\)\\(=\\frac12|3(2)-(-4)(1)|\\)\\(=5\\)，所以此敘述正確。",
       "correct": true
     },
     {

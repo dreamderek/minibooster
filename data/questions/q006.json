@@ -8,7 +8,7 @@
     {
       "id": "A",
       "text": "\\(\\displaystyle \\Gamma_1\\) 與 \\(\\displaystyle \\Gamma_2\\) 恰好交於三個相異點。",
-      "note": "兩圖形交點滿足 \\(\\displaystyle f(x)-g(x)=2x(x^2+3)=0\\)；實數解只有 \\(\\displaystyle x=0\\)，因為 \\(\\displaystyle x^2+3>0\\)。因此不會有三個相異交點。",
+      "note": "兩圖形交點滿足 \\(\\displaystyle f(x)-g(x)\\)\\(=2x(x^2+3)\\)\\(=0\\)；實數解只有 \\(\\displaystyle x=0\\)，因為 \\(\\displaystyle x^2+3>0\\)。因此不會有三個相異交點。",
       "correct": false
     },
     {

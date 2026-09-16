@@ -20,13 +20,13 @@
     {
       "id": "C",
       "text": "半徑為 \\(\\displaystyle 6\\) 的圓中，圓心角為 \\(\\displaystyle \\frac{\\pi}{3}\\) 時，所對弧長為 \\(\\displaystyle \\pi\\)",
-      "note": "弧長 \\(l=r\\theta=6\\times\\frac{\\pi}{3}=2\\pi\\)，不是 \\(\\pi\\)。其中 \\(\\theta\\) 必須使用弧度量。",
+      "note": "弧長 \\(l\\)\\(=r\\theta\\)\\(=6\\times\\frac{\\pi}{3}\\)\\(=2\\pi\\)，不是 \\(\\pi\\)。其中 \\(\\theta\\) 必須使用弧度量。",
       "correct": false
     },
     {
       "id": "D",
       "text": "半徑為 \\(\\displaystyle 4\\) 的扇形中，圓心角為 \\(\\displaystyle \\frac{\\pi}{2}\\) 時，扇形面積為 \\(\\displaystyle 4\\pi\\)",
-      "note": "扇形面積 \\(S=\\frac{1}{2}r^2\\theta=\\frac{1}{2}\\times4^2\\times\\frac{\\pi}{2}=4\\pi\\)。",
+      "note": "扇形面積 \\(S\\)\\(=\\frac{1}{2}r^2\\theta\\)\\(=\\frac{1}{2}\\times4^2\\times\\frac{\\pi}{2}\\)\\(=4\\pi\\)。",
       "correct": true
     },
     {

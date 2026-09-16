@@ -8,7 +8,7 @@
     {
       "id": "A",
       "text": "\\(\\displaystyle b_2<c_2\\)",
-      "note": "\\(\\displaystyle A^2=\\begin{pmatrix}2&1\\1&1\\end{pmatrix}\\)，所以 \\(\\displaystyle b_2=c_2=1\\)，不是小於。",
+      "note": "\\(\\displaystyle A^2=\\begin{pmatrix}2&1\\1&1\\end{pmatrix}\\)，所以 \\(\\displaystyle b_2\\)\\(=c_2\\)\\(=1\\)，不是小於。",
       "correct": false
     },
     {

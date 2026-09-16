@@ -20,7 +20,7 @@
     {
       "id": "C",
       "text": "\\(\\displaystyle m=-\\frac32\\) 時，\\(\\displaystyle L_m\\) 與 \\(\\displaystyle \\Gamma\\) 交於 \\(\\displaystyle \\left(\\frac13,\\frac12\\right)\\)。",
-      "note": "在 \\(\\displaystyle x=\\frac13\\) 時，\\(\\displaystyle \\Gamma:y=\\sin\\frac{\\pi}{6}=\\frac12\\)；直線值為 \\(\\displaystyle -\\frac32\\cdot\\frac13+1=\\frac12\\)，兩者確實相交於該點。",
+      "note": "在 \\(\\displaystyle x=\\frac13\\) 時，\\(\\displaystyle \\Gamma:y\\)\\(=\\sin\\frac{\\pi}{6}\\)\\(=\\frac12\\)；直線值為 \\(\\displaystyle -\\frac32\\cdot\\frac13+1=\\frac12\\)，兩者確實相交於該點。",
       "correct": true
     },
     {

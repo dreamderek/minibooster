@@ -8,7 +8,7 @@
     {
       "id": "A",
       "text": "若甲生英文原始成績為 60，則其 \\(\\displaystyle T\\) 分數為 40。",
-      "note": "英文平均為 \\(\\displaystyle 65\\)、標準差為 \\(\\displaystyle 5\\)，所以 \\(\\displaystyle T=50+10\\left(\\frac{60-65}{5}\\right)=40\\)。",
+      "note": "英文平均為 \\(\\displaystyle 65\\)、標準差為 \\(\\displaystyle 5\\)，所以 \\(\\displaystyle T\\)\\(=50+10\\left(\\frac{60-65}{5}\\right)\\)\\(=40\\)。",
       "correct": true
     },
     {
@@ -26,7 +26,7 @@
     {
       "id": "D",
       "text": "若兩科及格標準均為 \\(\\displaystyle T\\ge40\\)，則數學及格的原始成績門檻低於英文。",
-      "note": "數學由 \\(\\displaystyle T=S-15\\) 得 \\(\\displaystyle S\\ge55\\)；英文由 \\(\\displaystyle T=50+2(S-65)=2S-80\\) 得 \\(\\displaystyle S\\ge60\\)，所以數學門檻較低。",
+      "note": "數學由 \\(\\displaystyle T=S-15\\) 得 \\(\\displaystyle S\\ge55\\)；英文由 \\(\\displaystyle T\\)\\(=50+2(S-65)\\)\\(=2S-80\\) 得 \\(\\displaystyle S\\ge60\\)，所以數學門檻較低。",
       "correct": true
     },
     {
