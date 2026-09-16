@@ -17,7 +17,13 @@ function optionList(options) {
 }
 
 function knowledgeFocus(question) {
-    return question.meta.map((item) => `「${item}」`).join("與");
+    const meta = Array.isArray(question.meta)
+        ? question.meta
+        : String(question.meta || "").split(/[、,，]/).map((item) => item.trim()).filter(Boolean);
+    const quoted = meta.map((item) => `「${item}」`);
+    if (quoted.length === 0) return "本題相關概念";
+    if (quoted.length === 1) return quoted[0];
+    return quoted.slice(0, -1).join("、") + "與" + quoted.at(-1);
 }
 
 function feedbackFor(question, selection) {
@@ -62,7 +68,18 @@ function patchFor(filename, before, after) {
     ].join("\n");
 }
 
-const patches = fs.readdirSync(questionDirectory).filter((filename) => /^q\d{3}\.json$/.test(filename)).sort().map((filename) => {
+const requestedFiles = new Set(process.argv.slice(2));
+const filenames = fs.readdirSync(questionDirectory)
+    .filter((filename) => /^q\d{3}\.json$/.test(filename))
+    .filter((filename) => requestedFiles.size === 0 || requestedFiles.has(filename))
+    .sort();
+
+if (requestedFiles.size && filenames.length !== requestedFiles.size) {
+    const missing = [...requestedFiles].filter((filename) => !filenames.includes(filename));
+    throw new Error("Question files not found: " + missing.join(", "));
+}
+
+const patches = filenames.map((filename) => {
     const filePath = path.join(questionDirectory, filename);
     const before = fs.readFileSync(filePath, "utf8").replace(/\r\n/g, "\n").trimEnd();
     const after = `${JSON.stringify(updatedQuestion(JSON.parse(before)), null, 2)}\n`.replace(/\r\n/g, "\n").trimEnd();
