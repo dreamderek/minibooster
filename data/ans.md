@@ -148,4 +148,4 @@ ABCDE
 - JSON 必須可解析，且有 5 個選項。
 - grading 必須剛好有 31 組非空白回饋，並覆蓋所有至少選一項的組合；不可包含未作答的空字串鍵。
 - 選項的 correct 狀態、note 與每一組 grading 回饋必須互相一致。
-- 新題目直接加入 `data/questions` 資料夾；檔名使用 `q001.json` 至 `q999.json` 的編號格式。`q000.json` 是空白範本，不會出題。編號可跳號，缺少或刪除某個題檔時前端會略過它；新增前仍須確認檔名未重複。
+- 新題目直接加入 `data/questions` 資料夾；檔名使用 `q001.json` 至 `q999.json` 的編號格式。`q000.json` 是空白範本，不會出題。新增、刪除或重新命名題檔後，在專案根目錄執行 `node tools/generate-question-index.js` 重建 `data/questions/index.json`。工具只會收錄有效的 `qNNN.json` 檔案，且會先驗證每個題檔皆可解析為 JSON。

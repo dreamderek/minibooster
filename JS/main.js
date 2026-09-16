@@ -18,9 +18,8 @@
     let gestureStart = null;
     let gestureAxis = null;
     let expandedReviewId = null;
-    let availableQuestionsPromise = null;
-    const QUESTION_NUMBER_MAX = 999;
-    const QUESTION_BATCH_SIZE = 20;
+    let questionIdsPromise = null;
+    const QUESTION_INDEX_PATH = "./data/questions/index.json";
 
     function escapeHtml(value) {
         return String(value)
@@ -43,15 +42,15 @@
         return `<math-show inline>${escapeMathText(text)}</math-show>`;
     }
 
-    function pickRandomQuestion(questions, excludeId = null) {
-        if (!Array.isArray(questions) || questions.length === 0) {
-            throw new Error("questions array is empty");
+    function pickRandomQuestionId(questionIds, excludeId = null) {
+        if (!Array.isArray(questionIds) || questionIds.length === 0) {
+            throw new Error("questionIds array is empty");
         }
 
         const pool = excludeId
-            ? questions.filter((question) => question?.id !== excludeId)
-            : questions;
-        const source = pool.length > 0 ? pool : questions;
+            ? questionIds.filter((id) => id !== excludeId)
+            : questionIds;
+        const source = pool.length > 0 ? pool : questionIds;
         const index = Math.floor(Math.random() * source.length);
         return source[index];
     }
@@ -64,68 +63,59 @@
         };
     }
 
-    async function loadAvailableQuestions() {
-        if (availableQuestionsPromise) {
-            return availableQuestionsPromise;
+    async function loadQuestionIds() {
+        if (questionIdsPromise) {
+            return questionIdsPromise;
         }
 
-        availableQuestionsPromise = (async () => {
-            const questions = [];
-            let networkFailureCount = 0;
-
-            // q000.json 是編輯器的空白範本；q001.json 至 q999.json 可跳號存在。
-            for (let start = 1; start <= QUESTION_NUMBER_MAX; start += QUESTION_BATCH_SIZE) {
-                const end = Math.min(start + QUESTION_BATCH_SIZE - 1, QUESTION_NUMBER_MAX);
-                const batch = Array.from({ length: end - start + 1 }, (_, offset) => start + offset);
-                const loadedQuestions = await Promise.all(batch.map(async (number) => {
-                    const id = `q${String(number).padStart(3, "0")}`;
-                    const path = `./data/questions/${id}.json`;
-                    let response;
-                    try {
-                        response = await fetch(path, { cache: "no-store" });
-                    } catch (error) {
-                        networkFailureCount += 1;
-                        return null;
-                    }
-
-                    if (response.status === 404) {
-                        return null;
-                    }
-                    if (!response.ok) {
-                        throw new Error(`${path} load failed: HTTP ${response.status}`);
-                    }
-
-                    try {
-                        const questionData = await response.json();
-                        return normalizeQuestion(questionData, { id });
-                    } catch (error) {
-                        const contentType = response.headers.get("content-type") || "";
-                        if (contentType.includes("text/html")) {
-                            return null;
-                        }
-                        throw new Error(`${path} is not valid JSON`);
-                    }
-                }));
-
-                questions.push(...loadedQuestions.filter(Boolean));
+        questionIdsPromise = (async () => {
+            let response;
+            try {
+                // 使用條件式快取：內容未變更時不必重新下載，變更後仍會取得新索引。
+                response = await fetch(QUESTION_INDEX_PATH, { cache: "no-cache" });
+            } catch (error) {
+                throw new Error("無法讀取題目索引；請透過 HTTP 網頁伺服器開啟本頁，不可直接以 file:// 開啟 index.html");
             }
 
-            if (questions.length === 0) {
-                if (networkFailureCount > 0) {
-                    throw new Error("無法讀取題目檔；請透過 HTTP 網頁伺服器開啟本頁，不可直接以 file:// 開啟 index.html");
-                }
-                throw new Error("no question files found in data/questions");
+            if (!response.ok) {
+                throw new Error(`${QUESTION_INDEX_PATH} load failed: HTTP ${response.status}`);
             }
 
-            return questions;
+            let indexData;
+            try {
+                indexData = await response.json();
+            } catch (error) {
+                throw new Error(`${QUESTION_INDEX_PATH} is not valid JSON`);
+            }
+
+            const questionIds = Array.isArray(indexData?.questionIds)
+                ? [...new Set(indexData.questionIds.filter((id) => /^q\d{3}$/.test(id)))]
+                : [];
+            if (questionIds.length === 0) {
+                throw new Error("題目索引沒有可用的題目 ID");
+            }
+
+            return questionIds;
         })();
 
-        return availableQuestionsPromise;
+        return questionIdsPromise;
     }
 
     async function loadQuizData(excludeId = null) {
-        const questions = await loadAvailableQuestions();
-        return pickRandomQuestion(questions, excludeId);
+        const questionIds = await loadQuestionIds();
+        const id = pickRandomQuestionId(questionIds, excludeId);
+        const path = `./data/questions/${id}.json`;
+        const response = await fetch(path);
+
+        if (!response.ok) {
+            throw new Error(`${path} load failed: HTTP ${response.status}`);
+        }
+
+        try {
+            return normalizeQuestion(await response.json(), { id });
+        } catch (error) {
+            throw new Error(`${path} is not valid JSON`);
+        }
     }
 
     function renderQuestion(data) {
