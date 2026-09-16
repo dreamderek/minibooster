@@ -25,7 +25,7 @@
     },
     {
       "id": "D",
-      "text": "由倍角公式，\\(\\displaystyle \\cos60^\\circ=\\cos^2 30^\\circ-\\sin^2 30^\\circ=\\frac12\\)。",
+      "text": "由倍角公式，\\(\\displaystyle \\cos60^\\circ=\\cos^2 30^\\circ-\\sin^2 30^\\circ\\)\\(=\\frac12\\)。",
       "note": "這是倍角公式 \\(\\displaystyle \\cos2\\theta=\\cos^2\\theta-\\sin^2\\theta\\) 的直接應用。代入 \\(\\displaystyle \\theta=30^\\circ\\) 得 \\(\\displaystyle \\frac34-\\frac14=\\frac12\\)。",
       "correct": true
     },
