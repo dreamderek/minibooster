@@ -1,11 +1,8 @@
 ﻿window.onload = () => {
     const pages = document.getElementById("pages");
-    const pageIndicator = document.getElementById("pageIndicator");
-    const PAGE_IMAGES = ["./assets/minitask.png", "./assets/minireview.png", "./assets/miniad.png"];
-    PAGE_IMAGES.forEach((src) => {
-        const preload = new Image();
-        preload.src = src;
-    });
+    const prevPageBtn = document.getElementById("prevPageBtn");
+    const nextPageBtn = document.getElementById("nextPageBtn");
+    const PAGE_COUNT = 3;
     const optionPanel = document.querySelectorAll("frame-panel")[1];
     const submitBtn = document.getElementById("submitBtn");
     const nextQuestionBtn = document.getElementById("nextQuestionBtn");
@@ -171,8 +168,10 @@
         return pages.clientWidth;
     }
 
-    function syncPageIndicator(index) {
-        pageIndicator.src = PAGE_IMAGES[index] || PAGE_IMAGES[0];
+    function syncNavigationControls(index) {
+        const pageIndex = Math.max(0, Math.min(index, PAGE_COUNT - 1));
+        prevPageBtn.disabled = pageIndex === 0;
+        nextPageBtn.disabled = pageIndex === PAGE_COUNT - 1 || !reviewUnlocked;
     }
 
     function updateNavigationState() {
@@ -182,12 +181,12 @@
     function snapTo(index) {
         if (index > 0 && !reviewUnlocked) {
             pages.scrollTo({ left: 0, behavior: "smooth" });
-            syncPageIndicator(0);
+            syncNavigationControls(0);
             return false;
         }
 
         pages.scrollTo({ left: index * pageStep(), behavior: "smooth" });
-        syncPageIndicator(index);
+        syncNavigationControls(index);
         return true;
     }
 
@@ -286,11 +285,11 @@
             const index = Math.round(pages.scrollLeft / pageStep());
             if (!reviewUnlocked && index > 0) {
                 pages.scrollLeft = 0;
-                syncPageIndicator(0);
+                syncNavigationControls(0);
                 return;
             }
 
-            syncPageIndicator(index);
+            syncNavigationControls(index);
         });
 
         pages.addEventListener(
@@ -352,7 +351,7 @@
             if (Math.abs(dx) > step * 0.2 || Math.abs(velocity) > 0.5) {
                 next = dx < 0 ? startIndex + 1 : startIndex - 1;
             }
-            next = Math.max(0, Math.min(next, PAGE_IMAGES.length - 1));
+            next = Math.max(0, Math.min(next, PAGE_COUNT - 1));
 
             pages.style.scrollSnapType = "x mandatory";
             snapTo(next);
@@ -363,6 +362,16 @@
 
         pages.addEventListener("touchend", endGesture, { passive: true });
         pages.addEventListener("touchcancel", endGesture, { passive: true });
+
+        prevPageBtn.addEventListener("click", () => {
+            const current = Math.round(pages.scrollLeft / pageStep());
+            snapTo(current - 1);
+        });
+
+        nextPageBtn.addEventListener("click", () => {
+            const current = Math.round(pages.scrollLeft / pageStep());
+            snapTo(current + 1);
+        });
     }
 
     submitBtn.addEventListener("click", () => {
