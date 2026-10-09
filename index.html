@@ -43,7 +43,7 @@
                     </frame-panel>
 
                     <div class="action-bar">
-                        <button class="btn" id="submitBtn" type="button">答案送出</button>
+                        <button class="btn" id="submitBtn" type="button">答案送出 ➔</button>
                     </div>
                 </section>
 
@@ -56,15 +56,22 @@
                                         <h3>作答結果 <span style="font-size: 0.7em;color:orange;">點選項看詳解</span></h3>
                                         <div class="review-list" id="reviewList"></div>
                                     </div>
-
-                                    <div class="analysis-card">
-                                        <h3>評價</h3>
-                                        <p id="feedbackText"></p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </frame-panel>
+
+                    <frame-panel data-theme="review" title="評價">
+                        <div class="panel-scroll">
+                            <div class="panel-pad review-feedback">
+                                <p id="feedbackText"></p>
+                            </div>
+                        </div>
+                    </frame-panel>
+
+                    <div class="action-bar">
+                        <button class="btn" id="goToAdBtn" type="button">再做一題 / 了解更多功能 ➔</button>
+                    </div>
                 </section>
 
                 <section class="page ad-page" aria-label="廣告區">

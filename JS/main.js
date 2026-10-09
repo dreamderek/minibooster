@@ -5,6 +5,7 @@
     const PAGE_COUNT = 3;
     const optionPanel = document.querySelectorAll("frame-panel")[1];
     const submitBtn = document.getElementById("submitBtn");
+    const goToAdBtn = document.getElementById("goToAdBtn");
     const nextQuestionBtn = document.getElementById("nextQuestionBtn");
     const questionHost = document.getElementById("questionHost");
     const choicesHost = document.getElementById("choices");
@@ -402,6 +403,10 @@
 
         nextQuestionBtn.textContent = originalLabel;
         nextQuestionBtn.disabled = false;
+    });
+
+    goToAdBtn?.addEventListener("click", () => {
+        snapTo(2);
     });
 
     (async () => {

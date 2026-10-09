@@ -190,6 +190,18 @@ body {
 .review-page {
     min-height: 0;
     height: 100%;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) minmax(96px, 28%) auto;
+    align-content: stretch;
+}
+
+.review-page frame-panel {
+    height: auto;
+}
+
+.review-page .panel-scroll {
+    flex: 1 1 auto;
+    width: 100%;
 }
 
 .ad-page {
@@ -665,6 +677,10 @@ body {
     word-break: break-word;
 }
 
+.review-feedback #feedbackText {
+    margin: 0;
+}
+
 #feedbackText math-show {
     max-width: 100%;
     font-size: 1.5em;
@@ -796,6 +812,7 @@ frame-panel[data-theme] {
 }
 
 .frame-panel-head {
+    display: flex;
     align-items: center;
     min-height: 30px;
     margin: 0 14px -15px;
@@ -975,6 +992,31 @@ frame-panel[data-theme] {
         max-width: 840px;
         margin: 0 auto;
         padding-inline: 20px;
+    }
+}
+
+/* 電腦版以獨立操作面板呈現；平板與手機維持原本的滿版配置。 */
+@media (min-width: 1024px) {
+    body {
+        display: grid;
+        place-items: center;
+        padding: 16px;
+        background: #e7ebe2;
+    }
+
+    .app {
+        width: 60%;
+        min-height: 0;
+        height: calc(100dvh - 32px);
+        border: 1px solid #bdc9b6;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 14px 34px rgba(30, 50, 23, 0.16);
+    }
+
+    .page {
+        max-width: none;
+        margin: 0;
     }
 }
 
