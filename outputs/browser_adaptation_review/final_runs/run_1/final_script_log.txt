@@ -1,0 +1,4 @@
+step 1 action: loaded desktop 1440x1000; title='MetaMath 作答頁'; overflow=False; scrollWidth=1440; clientWidth=1440; navCount=0; links=1; buttons=5; bodyTextLength=251
+step 2 action: loaded tablet 768x1024; title='MetaMath 作答頁'; overflow=False; scrollWidth=768; clientWidth=768; navCount=0; links=1; buttons=5; bodyTextLength=204
+step 3 action: loaded mobile 390x844; title='MetaMath 作答頁'; overflow=False; scrollWidth=390; clientWidth=390; navCount=0; links=1; buttons=5; bodyTextLength=221
+final datum: Firefox console errors=0
