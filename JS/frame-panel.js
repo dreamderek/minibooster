@@ -64,6 +64,7 @@ frame-panel,
     min-height: 0;
     display: flex;
     flex-direction: column;
+    position: relative;
     overflow: hidden;
     border-radius: 12px;
     box-shadow: 0 8px 18px rgba(54, 74, 35, 0.08), inset 0 0 0 1px rgba(255,255,255,0.8);
@@ -85,6 +86,44 @@ frame-panel,
 
 .panel-scroll::-webkit-scrollbar {
     display: none;
+}
+
+.panel-scroll-controls {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    right: -10px;
+    display: grid;
+    gap: 45px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    opacity: 0.2;
+    visibility: visible;
+    transition: opacity 180ms ease, visibility 0s linear;
+}
+
+.panel-scroll-controls.is-hidden,
+.panel-scroll-control.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 180ms ease, visibility 0s linear 180ms;
+}
+
+.panel-scroll-control {
+    display: grid;
+    width: 22px;
+    height: 20px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #3b5b2e;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 180ms ease, visibility 0s linear;
 }
 
 .panel-pad {
@@ -205,6 +244,47 @@ frame-panel[data-theme="ad"] {
                     node.remove();
                     body.appendChild(node);
                 });
+
+                const scrollArea = body.querySelector(".panel-scroll");
+                if (!scrollArea) return;
+
+                const controls = document.createElement("div");
+                controls.className = "panel-scroll-controls";
+                controls.classList.add("is-hidden");
+                controls.setAttribute("aria-hidden", "true");
+                controls.innerHTML = `
+                    <span class="panel-scroll-control">︽</span>
+                    <span class="panel-scroll-control">︾</span>
+                `;
+                shell.appendChild(controls);
+                controls.innerHTML = `
+                    <span class="panel-scroll-control">&#65085;</span>
+                    <span class="panel-scroll-control">&#65086;</span>
+                `;
+
+                const [upIndicator, downIndicator] = controls.querySelectorAll(".panel-scroll-control");
+                const updateScrollControls = () => {
+                    const maxScrollTop = scrollArea.scrollHeight - scrollArea.clientHeight;
+                    const scrollThreshold = 8;
+                    const isScrollable = maxScrollTop > scrollThreshold;
+                    controls.classList.toggle("is-hidden", !isScrollable);
+                    upIndicator.classList.toggle("is-hidden", !isScrollable || scrollArea.scrollTop <= scrollThreshold);
+                    downIndicator.classList.toggle("is-hidden", !isScrollable || scrollArea.scrollTop >= maxScrollTop - scrollThreshold);
+                };
+
+                scrollArea.addEventListener("scroll", updateScrollControls, { passive: true });
+
+                const resizeObserver = new ResizeObserver(updateScrollControls);
+                resizeObserver.observe(scrollArea);
+                if (scrollArea.firstElementChild) {
+                    resizeObserver.observe(scrollArea.firstElementChild);
+                }
+
+                const contentObserver = new MutationObserver(updateScrollControls);
+                contentObserver.observe(scrollArea, { childList: true, subtree: true, characterData: true });
+
+                requestAnimationFrame(updateScrollControls);
+                requestAnimationFrame(() => requestAnimationFrame(updateScrollControls));
             });
         }
     }
