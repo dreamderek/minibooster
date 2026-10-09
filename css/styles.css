@@ -18,6 +18,8 @@
 html,
 body {
     width: 100%;
+    min-height: 100vh;
+    height: 100vh;
     min-height: 100dvh;
     height: 100dvh;
     margin: 0;
@@ -35,6 +37,8 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
+    min-height: 100vh;
+    height: 100vh;
     min-height: 100dvh;
     height: 100dvh;
 }
@@ -191,11 +195,12 @@ body {
 .ad-page {
     min-height: 0;
     height: 100%;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
     gap: 10px;
 }
 
 .ad-page frame-panel {
-    flex: 1 1 auto;
     min-height: 0;
     height: auto;
 }
